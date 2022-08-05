@@ -15,11 +15,11 @@ public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	
 	@PostMapping("/add")
 	public void createUser(@RequestBody User user) {
-		userRepository.save(user);
+		userService.addUser(user);
 	}
 	
 }
