@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React from 'react'
+import React from 'react';
+
 
 class UserSingupPage extends React.Component {
 
@@ -40,28 +41,40 @@ class UserSingupPage extends React.Component {
 
   render() {
     return (
-      <form>
-        <div>
-          <label>Username:</label>
-          <input name='userName' onChange={this.onChange} />
-        </div>
-        <div>
-          <label>Display Name:</label>
-          <input name='displayName' onChange={this.onChange} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type={'password'} name="password" onChange={this.onChange} />
-        </div>
-        <div>
-          <label>Password Repeat:</label>
-          <input type={'password'} name="passwordRepeat" onChange={this.onChange} />
-        </div>
-        <div>
-          <input type={'checkbox'} name="agreedClicked" onChange={this.onChange} /> Agreed
-        </div>
-        <button disabled={!this.state.agreedClicked} onClick={this.onClickSingUp}>Sing Up</button>
-      </form>
+      <div className='container'>
+        <form>
+          <div className='mt-3'>
+            <h1 className='text-center'>Sing Up</h1>
+            <div className='mt-3'>
+              <label>Username:</label>
+              <input name='userName' className='form-control' onChange={this.onChange} />
+            </div>
+            <div className='mt-3'>
+              <label>Display Name:</label>
+              <input name='displayName' className='form-control' onChange={this.onChange} />
+            </div>
+            <div className='mt-3'>
+              <label>Password:</label>
+              <input type={'password'} name="password" className='form-control' onChange={this.onChange} />
+            </div>
+            <div className='mt-3'>
+              <label>Password Repeat:</label>
+              <input type={'password'} name="passwordRepeat" className='form-control' onChange={this.onChange} />
+            </div>
+            <div className='mt-3'>
+              <div class="input-group mb-3">
+                  <div class="input-group-text">
+                    <input className='form-check-input mt-0' type={'checkbox'} name="agreedClicked" onChange={this.onChangeAgreed} />
+                  </div>
+                <input type="text" class="form-control" value={"Agreed"} />
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <button size="lg" className='btn btn-primary btn-block' disabled={!this.state.agreedClicked} onClick={this.onClickSingUp}>Sing Up</button>
+            </div>
+          </div>
+        </form>
+      </div>
     );
   }
 }
