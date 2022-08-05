@@ -1,10 +1,9 @@
-import axios from "axios";
+import {singup} from "../api/apiCalls";
 import React from "react";
 
 class UserSingupPage extends React.Component {
   state = {
     userName: null,
-    agreedClicked: false,
     displayName: null,
     password: null,
     passwordRepeat: null,
@@ -19,7 +18,7 @@ class UserSingupPage extends React.Component {
     });
   };
 
-  onClickSingUp = (event) => {
+  onClickSingUp = async (event) => {
     event.preventDefault();
     const { userName, displayName, password } = this.state;
     const body = {
@@ -27,18 +26,16 @@ class UserSingupPage extends React.Component {
       displayName,
       password,
     };
+
     this.setState({ pendingApiCall: true });
-    axios
-      .post("/api/1.0/users/add", body)
-      .then((response) => {
-        this.setState({ pendingApiCall: false });
-      })
-      .catch((error) => {
-        this.setState({ pendingApiCall: false });
-      });
+    try {
+      const response = await singup(body);
+    } catch (error) {}
+    this.setState({ pendingApiCall: false });
   };
 
   render() {
+    const {pendingApiCall} = this.state;
     return (
       <div className="container w-50">
         <form>
@@ -83,10 +80,10 @@ class UserSingupPage extends React.Component {
               <button
                 size="lg"
                 className="btn btn-primary btn-block"
-                disabled={this.state.pendingApiCall}
+                disabled={pendingApiCall}
                 onClick={this.onClickSingUp}
               >
-                {this.state.pendingApiCall
+                {pendingApiCall
                   ? <div><span className="spinner-border spinner-border-sm mx-3" /> Loading...</div>
                   : "Sing Up"}
               </button>
