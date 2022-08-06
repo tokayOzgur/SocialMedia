@@ -1,5 +1,6 @@
 import { singup } from "../api/apiCalls";
 import React from "react";
+import Input from "../components/Input";
 
 class UserSingupPage extends React.Component {
   state = {
@@ -49,16 +50,11 @@ class UserSingupPage extends React.Component {
         <form>
           <div className="mt-3">
             <h1 className="text-center">Sing Up</h1>
-            <div className="mt-3">
-              <label>username:</label>
-              <input name="username" className={ username ? "form-control is-invalid" : "form-control"} onChange={this.onChange}/>
-              <div className="invalid-feedback">{username}</div>
-            </div>
-            <div className="mt-3">
-              <label>Display Name:</label>
-              <input name="displayName" className={displayName ? "form-control is-invalid" : "form-control"} onChange={this.onChange}/>
-              <div className="invalid-feedback">{displayName}</div>
-            </div>
+            {/* labelName, inputName, error, onChangeMethod  */}
+            <Input labelName="Username" inputName="username" error={username} onChangeMethod={this.onChange} />
+            
+            <Input labelName="Display Name" inputName="displayName" error={displayName} onChangeMethod={this.onChange} />
+            
             <div className="mt-3">
               <label>Password:</label>
               <input
