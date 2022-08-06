@@ -3,12 +3,17 @@ package com.tokay.ws.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tokay.ws.error.ApiError;
@@ -22,23 +27,21 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping("/add")
-	public ResponseEntity<?> createUser(@RequestBody User user) {
-		ApiError apiError = new ApiError(400, "Validation error!", "/api/1.0/users");
-		Map<String, String> validationErrors = new HashMap<>();
-
-		if (user.getUserName() == null || user.getUserName().isEmpty()) {
-			validationErrors.put("username", "Username can not be null");
-		}
-		if (user.getDisplayName() == null || user.getDisplayName().isEmpty()) {
-			validationErrors.put("displayName", "Display name can not be null");
-		}
-		if (validationErrors.size() > 0) {
-			apiError.setValidationErrors(validationErrors);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
-		}
-
+	public GenericResponse createUser(@Valid @RequestBody User user) {
 		userService.addUser(user);
-		return ResponseEntity.ok(new GenericResponse("user created"));
+		return new GenericResponse("user created");
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ApiError handleValidationExcepiton(MethodArgumentNotValidException exception) {
+		ApiError error = new ApiError(400, "Validation Error", "/api/1.0/users");
+		Map<String, String> validationErrors = new HashMap<>();
+		for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
+			validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+		}
+		error.setValidationErrors(validationErrors);
+		return error;
 	}
 
 }

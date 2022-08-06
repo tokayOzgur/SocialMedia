@@ -44,29 +44,19 @@ class UserSingupPage extends React.Component {
 
   render() {
     const { pendingApiCall, errors } = this.state;
-    const { username, displayName } = errors;
+    const { username, displayName,password } = errors;
     return (
       <div className="container w-50">
         <form>
           <div className="mt-3">
             <h1 className="text-center">Sing Up</h1>
             {/* labelName, inputName, error, onChangeMethod  */}
-            <Input labelName="Username" inputName="username" error={username} onChangeMethod={this.onChange} />
+            <Input labelName={"Username"} inputName={"username"} error={username} onChangeMethod={this.onChange} />
             
-            <Input labelName="Display Name" inputName="displayName" error={displayName} onChangeMethod={this.onChange} />
+            <Input labelName={"Display Name"} inputName={"displayName"} error={displayName} onChangeMethod={this.onChange} />
+
+            <Input labelName={"Password"} inputName={"password"} error={password} onChangeMethod={this.onChange} inputType={"password"}/>
             
-            <div className="mt-3">
-              <label>Password:</label>
-              <input
-                type={"password"}
-                name="password"
-                className="form-control"
-                onChange={this.onChange}
-              />
-              <div className="invalid-feedback">
-                Please provide a valid city.
-              </div>
-            </div>
             <div className="mt-3">
               <label>Password Repeat:</label>
               <input

@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Input(props) {
-  const { labelName, inputName, error, onChangeMethod } = props;
+  const { labelName, inputName, error, onChangeMethod, inputType} = props;
   const className = error ? "form-control is-invalid" : "form-control";
 
   return (
@@ -12,6 +12,7 @@ export default function Input(props) {
           name={inputName}
           className={className}
           onChange={onChangeMethod}
+          type={inputType}
         />
         <div className="invalid-feedback">{error}</div>
       </div>
