@@ -9,6 +9,12 @@ spring:
     generate-ddl: true
     hibernate:
             ddl-auto: update
+   
+    properties:
+        javax:
+          persistance:
+            validation:
+              mode: none
   h2:
     console.enabled: true
     

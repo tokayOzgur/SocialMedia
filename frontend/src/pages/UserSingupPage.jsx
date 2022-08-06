@@ -16,6 +16,15 @@ class UserSingupPage extends React.Component {
     const { name, value } = event.target;
     const errors = { ...this.state.errors };
     errors[name] = undefined;
+    if (name === 'password' || name==='passwordRepeat') {
+      if (name==='password' && value !== this.state.passwordRepeat) {
+          errors.passwordRepeat = 'Şifreler eşleşmiyor!';
+      }else if(name==='passwordRepeat' && value!==this.state.password){
+          errors.passwordRepeat = 'Şifreler eşleşmiyor!';
+      }else{
+        errors.passwordRepeat=undefined;
+      }
+    }
     this.setState({
       [name]: value,
       errors,
@@ -44,7 +53,7 @@ class UserSingupPage extends React.Component {
 
   render() {
     const { pendingApiCall, errors } = this.state;
-    const { username, displayName,password } = errors;
+    const { username, displayName,password, passwordRepeat } = errors;
     return (
       <div className="container w-50">
         <form>
@@ -57,24 +66,13 @@ class UserSingupPage extends React.Component {
 
             <Input labelName={"Password"} inputName={"password"} error={password} onChangeMethod={this.onChange} inputType={"password"}/>
             
-            <div className="mt-3">
-              <label>Password Repeat:</label>
-              <input
-                type={"password"}
-                name="passwordRepeat"
-                className="form-control"
-                onChange={this.onChange}
-              />
-              <div className="invalid-feedback">
-                Please provide a valid city.
-              </div>
-            </div>
-
+            <Input labelName={"Password Repeat"} inputName={"passwordRepeat"} error={passwordRepeat} onChangeMethod={this.onChange} inputType={"password"}/>
+            
             <div className="d-grid gap-2 mt-3">
               <button
                 size="lg"
                 className="btn btn-primary btn-block"
-                disabled={pendingApiCall}
+                disabled={pendingApiCall || passwordRepeat !== undefined}
                 onClick={this.onClickSingUp}
               >
                 {pendingApiCall ? (
