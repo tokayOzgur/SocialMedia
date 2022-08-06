@@ -17,7 +17,7 @@ class UserSingupPage extends React.Component {
     errors[name] = undefined;
     this.setState({
       [name]: value,
-      errors
+      errors,
     });
   };
 
@@ -43,7 +43,7 @@ class UserSingupPage extends React.Component {
 
   render() {
     const { pendingApiCall, errors } = this.state;
-    const { username } = errors;
+    const { username, displayName } = errors;
     return (
       <div className="container w-50">
         <form>
@@ -51,25 +51,13 @@ class UserSingupPage extends React.Component {
             <h1 className="text-center">Sing Up</h1>
             <div className="mt-3">
               <label>username:</label>
-              <input
-                name="username"
-                className={
-                  username ? "form-control is-invalid" : "form-control"
-                }
-                onChange={this.onChange}
-              />
+              <input name="username" className={ username ? "form-control is-invalid" : "form-control"} onChange={this.onChange}/>
               <div className="invalid-feedback">{username}</div>
             </div>
             <div className="mt-3">
               <label>Display Name:</label>
-              <input
-                name="displayName"
-                className="form-control"
-                onChange={this.onChange}
-              />
-              <div className="invalid-feedback">
-                Please provide a valid city.
-              </div>
+              <input name="displayName" className={displayName ? "form-control is-invalid" : "form-control"} onChange={this.onChange}/>
+              <div className="invalid-feedback">{displayName}</div>
             </div>
             <div className="mt-3">
               <label>Password:</label>
