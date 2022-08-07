@@ -1,7 +1,6 @@
-import { singup } from "../api/apiCalls";
+import { singup,changeLanguageInApiCalls } from "../api/apiCalls";
 import React from "react";
 import Input from "../components/Input";
-import { WithTranslation } from "react-i18next";
 import { withTranslation } from "react-i18next";
 
 class UserSingupPage extends React.Component {
@@ -20,9 +19,9 @@ class UserSingupPage extends React.Component {
     errors[name] = undefined;
     if (name === "password" || name === "passwordRepeat") {
       if (name === "password" && value !== this.state.passwordRepeat) {
-        errors.passwordRepeat = this.props.t('Password missmatch!');
+        errors.passwordRepeat = this.props.t("Password missmatch!");
       } else if (name === "passwordRepeat" && value !== this.state.password) {
-        errors.passwordRepeat = this.props.t('Password missmatch!');
+        errors.passwordRepeat = this.props.t("Password missmatch!");
       } else {
         errors.passwordRepeat = undefined;
       }
@@ -53,15 +52,21 @@ class UserSingupPage extends React.Component {
     this.setState({ pendingApiCall: false });
   };
 
+  onChangeLanguage = (language) => {
+    const { i18n } = this.props;
+    i18n.changeLanguage(language);
+    changeLanguageInApiCalls(language);
+  };
+
   render() {
     const { pendingApiCall, errors } = this.state;
     const { username, displayName, password, passwordRepeat } = errors;
-    const {t} = this.props;
+    const { t } = this.props;
     return (
       <div className="container w-50">
         <form>
           <div className="mt-3">
-            <h1 className="text-center">{t('Sing Up')}</h1>
+            <h1 className="text-center">{t("Sing Up")}</h1>
             <Input
               labelName={t("Username")}
               inputName={"username"}
@@ -105,10 +110,29 @@ class UserSingupPage extends React.Component {
                     Loading...
                   </div>
                 ) : (
-                  t('Sing Up')
+                  t("Sing Up")
                 )}
               </button>
             </div>
+          </div>
+          <div className="mt-3">
+            <label>{t('Choose a language:')}</label>
+            <img
+              src="https://www.worldometers.info/img/flags/uk-flag.gif"
+              width={"34px"}
+              alt="English"
+              className="mx-3"  
+              onClick={() => this.onChangeLanguage("en")}
+              style={{'cursor':'pointer'}}
+            ></img>
+            <img
+              src="https://www.worldometers.info/img/flags/tu-flag.gif"
+              width={"34px"}
+              className="mx-3"
+              alt="Turkish"
+              onClick={() => this.onChangeLanguage("tr")}
+              style={{'cursor':'pointer'}}
+            ></img>
           </div>
         </form>
       </div>
