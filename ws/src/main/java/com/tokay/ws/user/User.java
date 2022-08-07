@@ -20,18 +20,18 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotNull
-	@Size(min = 4, max = 50)
-	@UniqueUsername
+	@NotNull(message = "{tokay.constraints.username.NotNull.message}")
+	@Size(min = 4, max = 50, message = "{tokay.constraints.username.Size.message}")
+	@UniqueUsername(message = "{tokay.constraints.username.UniqueUsername.message}")
 	private String username;
 
-	@NotNull
-	@Size(min = 4, max = 30)
+	@NotNull(message = "{tokay.constraints.displayName.NotNull.message}")
+	@Size(min = 4, max = 30, message = "{tokay.constraints.displayName.Size.message}")
 	private String displayName;
 
-	@NotNull
-	@Size(min = 8)
-	@Pattern(regexp = "^(?=.*[az])(?=.*[AZ])(?=.*\\d).*$")
+	@NotNull(message = "{tokay.constraints.password.NotNull.message}")
+	@Size(min = 8, message = "{tokay.constraints.password.Size.message}")
+	@Pattern(regexp = "^(?=.*[az])(?=.*[AZ])(?=.*\\d).*$",message = "{tokay.constraints.password.Pattern.message}")
 	private String password;
 
 }
