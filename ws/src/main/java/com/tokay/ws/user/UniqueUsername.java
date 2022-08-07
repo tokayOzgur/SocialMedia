@@ -9,15 +9,14 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ FIELD})
+@Target({ FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = {UniqueUsernameValidator.class })
+@Constraint(validatedBy = { UniqueUsernameValidator.class })
 public @interface UniqueUsername {
 
-	String message() default "{Seçtiğiniz Username başka bir kullanıcı tarafından kullanılıyor.}";
+	String message() default "Username must be unique";
 
 	Class<?>[] groups() default { };
 
 	Class<? extends Payload>[] payload() default { };
-	
 }

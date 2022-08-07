@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "spring.properties.javax.persistance.validation.mode",
+  "type": "java.lang.String",
+  "description": "A description for 'spring.properties.javax.persistance.validation.mode'"
+}]}

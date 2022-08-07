@@ -30,7 +30,7 @@ public class User {
 	private String displayName;
 
 	@NotNull
-	@Size(min = 8, max = 16)
+	@Size(min = 8)
 	@Pattern(regexp = "^(?=.*[az])(?=.*[AZ])(?=.*\\d).*$")
 	private String password;
 

@@ -14,12 +14,12 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 	public boolean isValid(String username, ConstraintValidatorContext context) {
 		if (username == null) {
 			return true;
-		}
-		User user = userRepository.findByUsername(username);
-		if (user != null) 
-			return false;
-		else
+		} else {
+			if (userRepository.existsByUsername(username)) {
+				return false;
+			}
 			return true;
+			
+		}
 	}
-
 }
