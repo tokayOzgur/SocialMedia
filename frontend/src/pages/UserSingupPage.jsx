@@ -1,4 +1,4 @@
-import { singup,changeLanguageInApiCalls } from "../api/apiCalls";
+import { singup } from "../api/apiCalls";
 import React from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
@@ -50,12 +50,6 @@ class UserSingupPage extends React.Component {
       }
     }
     this.setState({ pendingApiCall: false });
-  };
-
-  onChangeLanguage = (language) => {
-    const { i18n } = this.props;
-    i18n.changeLanguage(language);
-    changeLanguageInApiCalls(language);
   };
 
   render() {
@@ -114,25 +108,6 @@ class UserSingupPage extends React.Component {
                 )}
               </button>
             </div>
-          </div>
-          <div className="mt-3">
-            <label>{t('Choose a language:')}</label>
-            <img
-              src="https://www.worldometers.info/img/flags/uk-flag.gif"
-              width={"34px"}
-              alt="English"
-              className="mx-3"  
-              onClick={() => this.onChangeLanguage("en")}
-              style={{'cursor':'pointer'}}
-            ></img>
-            <img
-              src="https://www.worldometers.info/img/flags/tu-flag.gif"
-              width={"34px"}
-              className="mx-3"
-              alt="Turkish"
-              onClick={() => this.onChangeLanguage("tr")}
-              style={{'cursor':'pointer'}}
-            ></img>
           </div>
         </form>
       </div>
