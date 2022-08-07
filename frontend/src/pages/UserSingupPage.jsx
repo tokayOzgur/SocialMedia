@@ -1,6 +1,8 @@
 import { singup } from "../api/apiCalls";
 import React from "react";
 import Input from "../components/Input";
+import { WithTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class UserSingupPage extends React.Component {
   state = {
@@ -16,13 +18,13 @@ class UserSingupPage extends React.Component {
     const { name, value } = event.target;
     const errors = { ...this.state.errors };
     errors[name] = undefined;
-    if (name === 'password' || name==='passwordRepeat') {
-      if (name==='password' && value !== this.state.passwordRepeat) {
-          errors.passwordRepeat = 'Şifreler eşleşmiyor!';
-      }else if(name==='passwordRepeat' && value!==this.state.password){
-          errors.passwordRepeat = 'Şifreler eşleşmiyor!';
-      }else{
-        errors.passwordRepeat=undefined;
+    if (name === "password" || name === "passwordRepeat") {
+      if (name === "password" && value !== this.state.passwordRepeat) {
+        errors.passwordRepeat = this.props.t('Password missmatch!');
+      } else if (name === "passwordRepeat" && value !== this.state.password) {
+        errors.passwordRepeat = this.props.t('Password missmatch!');
+      } else {
+        errors.passwordRepeat = undefined;
       }
     }
     this.setState({
@@ -53,21 +55,43 @@ class UserSingupPage extends React.Component {
 
   render() {
     const { pendingApiCall, errors } = this.state;
-    const { username, displayName,password, passwordRepeat } = errors;
+    const { username, displayName, password, passwordRepeat } = errors;
+    const {t} = this.props;
     return (
       <div className="container w-50">
         <form>
           <div className="mt-3">
-            <h1 className="text-center">Sing Up</h1>
-            {/* labelName, inputName, error, onChangeMethod  */}
-            <Input labelName={"Username"} inputName={"username"} error={username} onChangeMethod={this.onChange} />
-            
-            <Input labelName={"Display Name"} inputName={"displayName"} error={displayName} onChangeMethod={this.onChange} />
+            <h1 className="text-center">{t('Sing Up')}</h1>
+            <Input
+              labelName={t("Username")}
+              inputName={"username"}
+              error={username}
+              onChangeMethod={this.onChange}
+            />
 
-            <Input labelName={"Password"} inputName={"password"} error={password} onChangeMethod={this.onChange} inputType={"password"}/>
-            
-            <Input labelName={"Password Repeat"} inputName={"passwordRepeat"} error={passwordRepeat} onChangeMethod={this.onChange} inputType={"password"}/>
-            
+            <Input
+              labelName={t("Display Name")}
+              inputName={"displayName"}
+              error={displayName}
+              onChangeMethod={this.onChange}
+            />
+
+            <Input
+              labelName={t("Password")}
+              inputName={"password"}
+              error={password}
+              onChangeMethod={this.onChange}
+              inputType={"password"}
+            />
+
+            <Input
+              labelName={t("Password Repeat")}
+              inputName={"passwordRepeat"}
+              error={passwordRepeat}
+              onChangeMethod={this.onChange}
+              inputType={"password"}
+            />
+
             <div className="d-grid gap-2 mt-3">
               <button
                 size="lg"
@@ -81,7 +105,7 @@ class UserSingupPage extends React.Component {
                     Loading...
                   </div>
                 ) : (
-                  "Sing Up"
+                  t('Sing Up')
                 )}
               </button>
             </div>
@@ -91,5 +115,5 @@ class UserSingupPage extends React.Component {
     );
   }
 }
-
-export default UserSingupPage;
+const UserSingupPageWithTranslation = withTranslation()(UserSingupPage);
+export default UserSingupPageWithTranslation;
