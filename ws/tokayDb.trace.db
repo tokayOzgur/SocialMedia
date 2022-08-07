@@ -56,3 +56,18 @@ alter table users add constraint UK_r43af9ap4edm43mmtq01oddj6 unique (username) 
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+2022-08-06 21:37:18 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP USERS[*]"; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE, SYNONYM"; SQL statement:
+drop users [42001-200]
+2022-08-06 23:21:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PASSWORD VARCHAR(16)": "'$2a$10$Wm/ZATmBGoW0vcKB.8N8YuU/qvt6P2h/g4jua8S1OPcYmvKL4lgZu' (60)"; SQL statement:
+insert into users (id, display_name, password, username) values (null, ?, ?, ?) [22001-200]
+2022-08-06 23:23:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PASSWORD VARCHAR(16)": "'$2a$10$qU78yseKIMlguyVD9gNAK.JgJPgePnmdoqsCyqKduGVY4beSPHUzi' (60)"; SQL statement:
+insert into users (id, display_name, password, username) values (null, ?, ?, ?) [22001-200]
+2022-08-06 23:23:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE TABLE[*] USERS"; expected "identifier"; SQL statement:
+delete table users [42001-200]
+2022-08-06 23:23:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE TABLE[*] USERS"; expected "identifier"; SQL statement:
+delete table USERS [42001-200]
