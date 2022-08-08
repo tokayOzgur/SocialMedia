@@ -15,7 +15,8 @@ const LanguageSelector = (props) => {
         <label>{t("Choose a language:")}</label>
         <img
           src="https://www.worldometers.info/img/flags/uk-flag.gif"
-          width={"34px"}
+          width={"24px"}
+          height={"24px"}
           alt="English"
           className="mx-3"
           onClick={() => onChangeLanguage("en")}
@@ -23,8 +24,8 @@ const LanguageSelector = (props) => {
         ></img>
         <img
           src="https://www.worldometers.info/img/flags/tu-flag.gif"
-          width={"34px"}
-          className="mx-3"
+          width={"28px"}
+          height={"24px"}
           alt="Turkish"
           onClick={() => onChangeLanguage("tr")}
           style={{ cursor: "pointer" }}

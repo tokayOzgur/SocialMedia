@@ -1,19 +1,30 @@
 import React, { Component } from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
+import { login } from "../api/apiCalls";
 
 class LoginPage extends Component {
   state = {
     username: null,
     password: null,
-  }
+  };
 
-  onChange = event => {
+  onChange = (event) => {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
     });
-  }
+  };
+
+  onClickLogin = (event) => {
+    event.preventDefault();
+    const { username, password } = this.state;
+    const creds = {
+      username,
+      password,
+    };
+    login(creds);
+  };
 
   render() {
     const { t } = this.props;
@@ -35,8 +46,8 @@ class LoginPage extends Component {
           />
 
           <div className="d-grid gap-2 mt-3">
-            <button className="btn btn-primary btn-block">{t("Login")}</button>
-          </div>          
+            <button className="btn btn-primary btn-block" onClick={this.onClickLogin}>{t("Login")}</button>
+          </div>
         </form>
       </div>
     );
@@ -45,4 +56,3 @@ class LoginPage extends Component {
 
 const LoginPageWithTranslation = withTranslation()(LoginPage);
 export default LoginPageWithTranslation;
-
