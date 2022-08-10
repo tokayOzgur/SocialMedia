@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.tokay.ws.shared.Views;
+
 import lombok.Data;
 
 @Data
@@ -23,10 +26,12 @@ public class User {
 	@NotNull(message = "{tokay.constraints.username.NotNull.message}")
 	@Size(min = 4, max = 50, message = "{tokay.constraints.username.Size.message}")
 	@UniqueUsername(message = "{tokay.constraints.username.UniqueUsername.message}")
+	@JsonView(Views.Base.class)
 	private String username;
 
 	@NotNull(message = "{tokay.constraints.displayName.NotNull.message}")
 	@Size(min = 4, max = 30, message = "{tokay.constraints.displayName.Size.message}")
+	@JsonView(Views.Base.class)
 	private String displayName;
 
 	@NotNull(message = "{tokay.constraints.password.NotNull.message}")
@@ -34,4 +39,6 @@ public class User {
 	@Pattern(regexp = "^(?=.*[az])(?=.*[AZ])(?=.*\\d).*$",message = "{tokay.constraints.password.Pattern.message}")
 	private String password;
 
+	@JsonView(Views.Base.class)
+	private String image;
 }

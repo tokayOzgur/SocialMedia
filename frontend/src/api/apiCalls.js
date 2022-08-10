@@ -7,7 +7,7 @@ export const singup = (body) => {
 
 
 export const login = creds=>{
-    return axios.post('/api/1.0/users/auth',{},{auth:creds});
+    return axios.post('/api/1.0/auth/login',{},{auth:creds});
 }
 
 // , { headers: { 'accept-language': 'en' } }
