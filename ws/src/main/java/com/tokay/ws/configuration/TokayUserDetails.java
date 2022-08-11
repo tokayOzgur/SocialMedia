@@ -13,11 +13,11 @@ import com.tokay.ws.user.User;
  *
  */
 public class TokayUserDetails implements UserDetails {
-
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -413127327163921799L;
 	User user;
 
 	public TokayUserDetails(User user) {
