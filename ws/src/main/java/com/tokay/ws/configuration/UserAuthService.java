@@ -25,7 +25,7 @@ public class UserAuthService implements UserDetailsService{
 		if (userInDb==null) {
 			throw new UsernameNotFoundException("User not fount!");
 		}
-		return new TokayUserDetails(userInDb);
+		return userInDb;
 	}
 
 }
