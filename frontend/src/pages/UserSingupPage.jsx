@@ -2,6 +2,7 @@ import { singup } from "../api/apiCalls";
 import React from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
+import ButtonWithProgress from "../components/ButtonWithProgress";
 
 class UserSingupPage extends React.Component {
   state = {
@@ -90,24 +91,12 @@ class UserSingupPage extends React.Component {
               onChangeMethod={this.onChange}
               inputType={"password"}
             />
-
-            <div className="d-grid gap-2 mt-3">
-              <button
-                size="lg"
-                className="btn btn-primary btn-block"
-                disabled={pendingApiCall || passwordRepeat !== undefined}
-                onClick={this.onClickSingUp}
-              >
-                {pendingApiCall ? (
-                  <div>
-                    <span className="spinner-border spinner-border-sm mx-3" />
-                    Loading...
-                  </div>
-                ) : (
-                  t("Sing Up")
-                )}
-              </button>
-            </div>
+            <ButtonWithProgress
+              onClick={this.onClickSingUp}
+              disabled={pendingApiCall || passwordRepeat !== undefined}
+              pendingApiCall={pendingApiCall}
+              text={t("Sing Up")}
+            />
           </div>
         </form>
       </div>
