@@ -24,6 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
+		http.headers().frameOptions().disable();//h2 db reject connect localhost fix
 		
 		http.httpBasic().authenticationEntryPoint(new AuthEntryPoint());
 

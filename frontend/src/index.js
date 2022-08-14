@@ -8,14 +8,18 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './i18n';
 import LanguageSelector from './components/LanguageSelector';
+import ApiProgress from './shared/ApiProgress';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <LoginPage/>
-    {/* <UserSingupPage></UserSingupPage> */}
-    <LanguageSelector/>
+    <ApiProgress>
+      {/* <LoginPage /> */}
+      <UserSingupPage></UserSingupPage>
+    </ApiProgress>
+
+    <LanguageSelector />
   </React.StrictMode>
 );
 
