@@ -12,7 +12,8 @@ i18n.use(initReactI18next).init({
                 'Password': 'Password',
                 'Password Repeat': 'Password Repeat',
                 'Choose a language:': 'Choose a language:', 
-                'Login': 'Login'
+                'Login': 'Login',
+                'Error':'Error'
             }
         },
         tr: {
@@ -24,7 +25,8 @@ i18n.use(initReactI18next).init({
                 'Password': 'Şifre',
                 'Password Repeat': 'Şifre Tekrarla',
                 'Choose a language:': ' Dil seç:',
-                'Login':'Giriş Yap'
+                'Login':'Giriş Yap',
+                'Error':'Hata'
             }
         }
     },

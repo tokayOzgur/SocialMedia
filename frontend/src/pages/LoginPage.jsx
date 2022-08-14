@@ -28,9 +28,12 @@ class LoginPage extends Component {
       username,
       password,
     };
+
+    const { push } = this.props.history;
     this.setState.error = null;
     try {
       await login(creds);
+      push("/");
     } catch (apiError) {
       this.setState({
         error: apiError.response.data.message,
@@ -39,7 +42,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { t,pendingApiCall } = this.props;
+    const { t, pendingApiCall } = this.props;
     const { username, password, error } = this.state;
     let buttonEnabled = username && password;
     return (
@@ -58,9 +61,9 @@ class LoginPage extends Component {
             onChangeMethod={this.onChange}
           />
           {this.state.error && (
-            <div className="alert alert-danger mt-2">{error}</div>
+            <div className="alert text-danger mt-2 bg-dark border border-danger border-2">{t("Error")}: {error}</div>
           )}
-          
+
           <ButtonWithProgress
             onClick={this.onClickLogin}
             disabled={!buttonEnabled || pendingApiCall}
@@ -74,5 +77,4 @@ class LoginPage extends Component {
 }
 
 const LoginPageWithTranslation = withTranslation()(LoginPage);
-export default withApiProgress(LoginPageWithTranslation,"/api/1.0/auth");
- 
+export default withApiProgress(LoginPageWithTranslation, "/api/1.0/auth");
