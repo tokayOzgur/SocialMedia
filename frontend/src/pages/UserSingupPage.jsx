@@ -3,6 +3,7 @@ import React from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
+import { withApiProgress } from "../shared/ApiProgress";
 
 class UserSingupPage extends React.Component {
   state = {
@@ -99,5 +100,7 @@ class UserSingupPage extends React.Component {
     );
   }
 }
-const UserSingupPageWithTranslation = withTranslation()(UserSingupPage);
+const UserSingupPageWithApiProgress= withApiProgress(UserSingupPage,"/api/1.0/users");
+const UserSingupPageWithTranslation = withTranslation()(UserSingupPageWithApiProgress);
+
 export default UserSingupPageWithTranslation;

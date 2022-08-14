@@ -7,14 +7,10 @@ function App() {
   return (
     <div className="row">
       <div className="col">
-        <ApiProgress path="/api/1.0/users">
           <LoginPage />
-        </ApiProgress>
       </div>
       <div className="col">
-        <ApiProgress path="/api/1.0/auth">
           <UserSingupPage />
-        </ApiProgress>
       </div>
       <LanguageSelector />
     </div>

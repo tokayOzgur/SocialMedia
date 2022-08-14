@@ -4,6 +4,7 @@ import { withTranslation } from "react-i18next";
 import { login } from "../api/apiCalls";
 
 import ButtonWithProgress from "../components/ButtonWithProgress";
+import { withApiProgress } from "../shared/ApiProgress";
 
 class LoginPage extends Component {
   state = {
@@ -42,7 +43,7 @@ class LoginPage extends Component {
     const { username, password, error } = this.state;
     let buttonEnabled = username && password;
     return (
-      <div className="container w-25">
+      <div className="container w-50">
         <form>
           <h1 className="text-center">{t("Login")}</h1>
           <Input
@@ -57,7 +58,7 @@ class LoginPage extends Component {
             onChangeMethod={this.onChange}
           />
           {this.state.error && (
-            <div className="alert alert-danger">{error}</div>
+            <div className="alert alert-danger mt-2">{error}</div>
           )}
           
           <ButtonWithProgress
@@ -73,4 +74,5 @@ class LoginPage extends Component {
 }
 
 const LoginPageWithTranslation = withTranslation()(LoginPage);
-export default LoginPageWithTranslation;
+export default withApiProgress(LoginPageWithTranslation,"/api/1.0/auth");
+ 
