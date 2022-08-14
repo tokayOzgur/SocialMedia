@@ -2,22 +2,22 @@ import React, { Component } from "react";
 import axios from "axios";
 
 function getDisplayName(WrappedComponent) {
-  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  return WrappedComponent.displayName || WrappedComponent.name || "Component";
 }
 
 export function withApiProgress(WrappedComponent, apiPath) {
   return class extends Component {
-    static displayName = `ApiProgres( ${getDisplayName(WrappedComponent)} )`;  
+    static displayName = `ApiProgres( ${getDisplayName(WrappedComponent)} )`;
 
     state = {
       pendingApiCall: false,
     };
     componentDidMount() {
-      axios.interceptors.request.use((request) => {
+      this.requestInterceptor = axios.interceptors.request.use((request) => {
         this.updateApiCallFor(request.url, true);
         return request;
       });
-      axios.interceptors.response.use(
+      this.responseInterceptors = axios.interceptors.response.use(
         (response) => {
           this.updateApiCallFor(response.config.url, false);
           return response;
@@ -27,6 +27,11 @@ export function withApiProgress(WrappedComponent, apiPath) {
           throw error;
         }
       );
+    }
+
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.requestInterceptor);
+      axios.interceptors.response.eject(this.responseInterceptors);
     }
 
     updateApiCallFor = (url, inProgress) => {

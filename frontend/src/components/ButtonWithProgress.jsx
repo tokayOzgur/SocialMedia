@@ -7,7 +7,7 @@ export default function ButtonWithProgress(props) {
       <div className="d-grid gap-2 mt-3">
         <button
           disabled={disabled}
-          className="btn btn-primary btn-block"
+          className="btn btn-dark btn-block"
           onClick={onClick}
         >
           {pendingApiCall&& <span className="spinner-border spinner-border-sm"></span>}{text}
