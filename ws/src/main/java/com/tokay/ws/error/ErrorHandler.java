@@ -19,12 +19,12 @@ import org.springframework.web.context.request.WebRequest;
  *
  */
 @RestController
-@RequestMapping("/error")
 public class ErrorHandler implements ErrorController {
 
 	@Autowired
 	private ErrorAttributes errorAttributes;
 
+	@RequestMapping("/error")
 	ApiError handlerError(WebRequest webRequest) {
 		Map<String, Object> attributes = this.errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.of(Include.MESSAGE,Include.BINDING_ERRORS));
 		String message = (String) attributes.get("message");

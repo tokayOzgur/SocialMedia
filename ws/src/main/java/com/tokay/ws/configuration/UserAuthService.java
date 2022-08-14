@@ -14,15 +14,15 @@ import com.tokay.ws.user.UserRepository;
  *
  */
 @Service
-public class UserAuthService implements UserDetailsService{
-	
+public class UserAuthService implements UserDetailsService {
+
 	@Autowired
 	UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User userInDb = userRepository.findByUsername(username);
-		if (userInDb==null) {
+		if (userInDb == null) {
 			throw new UsernameNotFoundException("User not fount!");
 		}
 		return userInDb;

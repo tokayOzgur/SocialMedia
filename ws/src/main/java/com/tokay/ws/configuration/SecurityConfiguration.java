@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.httpBasic().authenticationEntryPoint(new AuthEntryPoint());
 
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/1.0/auth/login").authenticated().and()
+		http.authorizeRequests().antMatchers(HttpMethod.POST,  "/api/1.0/auth").authenticated().and()
 				.authorizeRequests().anyRequest().permitAll();
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

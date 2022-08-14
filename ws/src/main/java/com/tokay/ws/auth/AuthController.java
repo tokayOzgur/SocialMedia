@@ -3,7 +3,6 @@ package com.tokay.ws.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -17,13 +16,12 @@ import com.tokay.ws.user.UserRepository;
  *
  */
 @RestController
-@RequestMapping("/api/1.0/auth")
 public class AuthController {
 
 	@Autowired
 	UserRepository userRepository;
 
-	@PostMapping("/login")
+	@PostMapping("/api/1.0/auth")
 	@JsonView(Views.Base.class)
 	public ResponseEntity<?> handleAuthentication(@CurrentUser User user) {
 		return ResponseEntity.ok(user);

@@ -16,5 +16,6 @@ spring:
             validation:
               mode: none
   h2:
-    console.enabled: true
+    console:
+        enabled: true
     

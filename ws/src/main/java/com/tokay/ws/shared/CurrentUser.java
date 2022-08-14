@@ -8,6 +8,10 @@ import java.lang.annotation.Target;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
+/**
+ * @author tokay
+ *
+ */
 @Target({ElementType.PARAMETER})
 @Retention(RUNTIME)
 @AuthenticationPrincipal

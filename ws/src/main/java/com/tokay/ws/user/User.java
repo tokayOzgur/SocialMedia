@@ -36,7 +36,7 @@ public class User implements UserDetails{
 	
 	@NotNull(message = "{tokay.constraints.username.NotNull.message}")
 	@Size(min = 4, max = 50, message = "{tokay.constraints.username.Size.message}")
-	@UniqueUsername(message = "{tokay.constraints.username.UniqueUsername.message}")
+	@UniqueUsername
 	@JsonView(Views.Base.class)
 	private String username;
 
@@ -47,7 +47,7 @@ public class User implements UserDetails{
 
 	@NotNull(message = "{tokay.constraints.password.NotNull.message}")
 	@Size(min = 8, message = "{tokay.constraints.password.Size.message}")
-	@Pattern(regexp = "^(?=.*[az])(?=.*[AZ])(?=.*\\d).*$",message = "{tokay.constraints.password.Pattern.message}")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{tokay.constraints.password.Pattern.message}")
 	private String password;
 
 	@JsonView(Views.Base.class)
