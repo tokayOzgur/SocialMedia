@@ -4,8 +4,38 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 
 export class TopBar extends Component {
+  state = {
+    isLoggenIn: true,
+    username: "user00",
+  };
+
   render() {
     const { t } = this.props;
+    const { isLoggenIn,username } = this.state;
+
+    let links = (
+      <ul className="navbar-nav">
+        <Link className="nav-link text-light" to={"/login"}>
+          <li>{t("Login")}</li>
+        </Link>
+        <Link className="nav-link text-light" to={"/singup"}>
+          <li>{t("SingUp")}</li>
+        </Link>
+      </ul>
+    );
+    if (isLoggenIn) {
+      links = (
+        <ul className="navbar-nav">
+          <Link className="nav-link text-light" to={`/user/${username}`}>
+            <li>{username}</li>
+          </Link>
+          <Link className="nav-link text-light" to={"/login"}>
+            <li>{t("Logout")}</li>
+          </Link>
+        </ul>
+      );
+    }
+
     return (
       <div className="shadow">
         <nav className="navbar navbar-dark bg-dark mb-3 navbar-expand">
@@ -20,14 +50,7 @@ export class TopBar extends Component {
               SocialMedia
             </Link>
 
-            <ul className="navbar-nav">
-              <Link className="nav-link text-light" to={"/login"}>
-                <li>{t("Login")}</li>
-              </Link>
-              <Link className="nav-link text-light" to={"/singup"}>
-                <li>{t("SingUp")}</li>
-              </Link>
-            </ul>
+            {links}
           </div>
         </nav>
       </div>
