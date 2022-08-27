@@ -4,14 +4,8 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 
 export class TopBar extends Component {
-  state = {
-    isLoggenIn: true,
-    username: "user00",
-  };
-
   render() {
-    const { t } = this.props;
-    const { isLoggenIn,username } = this.state;
+    const { t, isLoggedIn, username, onLogoutSuccess } = this.props;
 
     let links = (
       <ul className="navbar-nav">
@@ -23,14 +17,14 @@ export class TopBar extends Component {
         </Link>
       </ul>
     );
-    if (isLoggenIn) {
+    if (isLoggedIn) {
       links = (
         <ul className="navbar-nav">
           <Link className="nav-link text-light" to={`/user/${username}`}>
             <li>{username}</li>
           </Link>
           <Link className="nav-link text-light" to={"/login"}>
-            <li>{t("Logout")}</li>
+            <li onClick={onLogoutSuccess}>{t("Logout")}</li>
           </Link>
         </ul>
       );

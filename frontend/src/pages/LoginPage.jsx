@@ -24,6 +24,7 @@ class LoginPage extends Component {
   onClickLogin = async (event) => {
     event.preventDefault();
     const { username, password } = this.state;
+    let { onLoginSuccess } = this.props;
     const creds = {
       username,
       password,
@@ -34,6 +35,7 @@ class LoginPage extends Component {
     try {
       await login(creds);
       push("/");
+      onLoginSuccess(username);
     } catch (apiError) {
       this.setState({
         error: apiError.response.data.message,
@@ -61,7 +63,9 @@ class LoginPage extends Component {
             onChangeMethod={this.onChange}
           />
           {this.state.error && (
-            <div className="alert text-danger mt-2 bg-dark border border-danger border-2">{t("Error")}: {error}</div>
+            <div className="alert text-danger mt-2 bg-dark border border-danger border-2">
+              {t("Error")}: {error}
+            </div>
           )}
 
           <ButtonWithProgress
