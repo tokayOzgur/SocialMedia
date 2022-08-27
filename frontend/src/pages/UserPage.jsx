@@ -1,10 +1,10 @@
 import React from "react";
 import ProfileCard from "../components/ProfileCard";
 
-const UserPage = (props) => {
+const UserPage = () => {
   return (
     <div className="container ">
-      <ProfileCard username={props.username} />
+      <ProfileCard/>
     </div>
   );
 };

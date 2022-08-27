@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+import { Authentication } from "../shared/AuthenticationContext";
 
 export class TopBar extends Component {
+  static contextType = Authentication;
   render() {
-    const { t, isLoggedIn, username, onLogoutSuccess } = this.props;
-
+    const { t } = this.props;
+    let { state, onLogoutSuccess } = this.context;
+    let { isLoggedIn, username } = state;
     let links = (
       <ul className="navbar-nav">
         <Link className="nav-link text-light" to={"/login"}>

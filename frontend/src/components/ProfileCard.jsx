@@ -1,8 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { Authentication } from "../shared/AuthenticationContext";
 
-function ProfileCard(props) {
-  let pathUsername = props.match.params.username;
+const ProfileCard = (props) => {
+  let pathUsername = props.username;
   let loggedInUsername = props.username;
   let message = "We can not edit";
   if (pathUsername === loggedInUsername) {
@@ -10,6 +11,17 @@ function ProfileCard(props) {
   }
 
   return <div>{message} </div>;
+};
+
+class ProfileCardContextWraper extends React.Component {
+  static contextType = Authentication;
+  render() {
+    return (
+      <div>
+        <ProfileCard {...this.props}  username={this.context.state.username} />
+      </div>
+    );
+  }
 }
 
-export default withRouter(ProfileCard);
+export default withRouter(ProfileCardContextWraper);
