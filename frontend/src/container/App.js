@@ -41,7 +41,7 @@ class App extends React.Component {
               return <LoginPage {...props} onLoginSuccess={this.onLoginSuccess} />
             }} />)}
             <Route path={"/singup"} component={UserSingupPage} />
-            <Route path={"/user/:username"} component={UserPage} />
+            <Route path={"/user/:username"} component={(props) => { return <UserPage {...props} username={username} /> }} />
             <Redirect to={"/"} />
           </Switch>
         </Router>
