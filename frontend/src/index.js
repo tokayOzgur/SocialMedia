@@ -6,34 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './i18n';
 import App from './container/App';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-// import AuthenticationContext from './shared/AuthenticationContext';
+import configureStore from './redux/configureStore';
 
-let loggedInState = {
-    isLoggedIn: false,
-    username: undefined,
-    displayName: undefined,
-    image: undefined,
-    password: undefined,
-}
-
-let defaultState = {
-    isLoggedIn: false,
-    username: undefined,
-    displayName: undefined,
-    image: undefined,
-    password: undefined,
-}
-
-let reducer = (state = { ...defaultState }, action) => {
-    if (action.type === 'logout-success') {
-        return defaultState;
-    }
-    return state;
-}
-
-let store = createStore(reducer, loggedInState);
-
+let store =configureStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>

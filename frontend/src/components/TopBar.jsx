@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
-// import { Authentication } from "../shared/AuthenticationContext";
 import { connect } from "react-redux";
+import { logoutSuccess } from "../redux/authActions";
 
 export class TopBar extends Component {
-  // static contextType = Authentication;
   onClickLogout = () => {
-    let action = {type:'logout-success'};
-    this.props.dispatch(action);
+    this.props.dispatch(logoutSuccess());
   };
 
   render() {
-    const { t, username, isLoggedIn } = this.props;
+    const { t, username, isLoggedIn, onLogoutSuccess } = this.props;
 
     let links = (
       <ul className="navbar-nav">
@@ -32,7 +30,7 @@ export class TopBar extends Component {
             <li>{username}</li>
           </Link>
           <Link className="nav-link text-light" to={"/login"}>
-            <li onClick={this.onClickLogout}>{t("Logout")}</li>
+            <li onClick={onLogoutSuccess}>{t("Logout")}</li>
           </Link>
         </ul>
       );
@@ -69,4 +67,13 @@ let mapStoreProps = (store) => {
   };
 };
 
-export default connect(mapStoreProps)(TopBarWithTranslation);
+let mapDispatchToProps = (dispatch) => {
+  return {
+    onLogoutSuccess: () => dispatch(logoutSuccess()),
+  };
+};
+
+export default connect(
+  mapStoreProps,
+  mapDispatchToProps
+)(TopBarWithTranslation);
