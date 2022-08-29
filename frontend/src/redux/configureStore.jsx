@@ -1,20 +1,30 @@
 import { createStore } from "redux";
 import authReducer from "./authReducer";
 
-let loggedInState = {
-  isLoggedIn: false,
-  username: undefined,
-  displayName: undefined,
-  image: undefined,
-  password: undefined,
-};
-
 let configureStore = () => {
-  return createStore(
+  let hoaxAuth = localStorage.getItem("hoax-auth");
+  let stateInLocalStorage = {
+    isLoggedIn: false,
+    username: undefined,
+    displayName: undefined,
+    image: undefined,
+    password: undefined,
+  };
+  if (hoaxAuth) {
+    try {
+      stateInLocalStorage = JSON.parse(hoaxAuth);
+    } catch (error) {}
+  }
+
+  let store = createStore(
     authReducer,
-    loggedInState,
+    stateInLocalStorage,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
+  store.subscribe(() => {
+    localStorage.setItem("hoax-auth", JSON.stringify(store.getState()));
+  });
+  return store;
 };
 
 export default configureStore;
