@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { withApiProgress } from "../shared/ApiProgress";
 import { connect } from "react-redux";
 import { loginHandler } from "../redux/authActions";
-import { useEffect } from "react";
 
 const LoginPage = (props) => {
   let [username, setUsername] = useState();
