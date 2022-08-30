@@ -1,4 +1,4 @@
-import { login } from "../api/apiCalls";
+import { login, singup } from "../api/apiCalls";
 import * as ACTIONS from "./Constants";
 
 export const logoutSuccess = () => {
@@ -22,6 +22,14 @@ export const loginHandler = (credentials) => {
       password: credentials.password,
     };
     dispatch(loginSuccess(authState));
+    return response;
+  };
+};
+
+export const singupHandler = (user) => {
+  return async (dispatch) => {
+    const response = await singup(user);
+    dispatch(loginHandler(user));
     return response;
   };
 };

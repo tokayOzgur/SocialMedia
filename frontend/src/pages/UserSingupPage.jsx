@@ -1,9 +1,10 @@
-import { singup } from "../api/apiCalls";
 import React from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { withApiProgress } from "../shared/ApiProgress";
+import { connect } from "react-redux";
+import { singupHandler } from "../redux/authActions";
 
 class UserSingupPage extends React.Component {
   state = {
@@ -35,14 +36,21 @@ class UserSingupPage extends React.Component {
 
   onClickSingUp = async (event) => {
     event.preventDefault();
+
+    let { history, dispatch } = this.props;
+    let { push } = history;
+
     const { username, displayName, password } = this.state;
+
     const body = {
       username,
       displayName,
       password,
     };
+
     try {
-      const response = await singup(body);
+      await dispatch(singupHandler(body));
+      push("/");
     } catch (error) {
       if (error.response.data.validationErrors) {
         this.setState({ errors: error.response.data.validationErrors });
@@ -53,7 +61,7 @@ class UserSingupPage extends React.Component {
   render() {
     const { errors } = this.state;
     const { username, displayName, password, passwordRepeat } = errors;
-    const { t,pendingApiCall } = this.props;
+    const { t, pendingApiCall } = this.props;
     return (
       <div className="container w-50">
         <form>
@@ -100,7 +108,16 @@ class UserSingupPage extends React.Component {
     );
   }
 }
-const UserSingupPageWithApiProgress= withApiProgress(UserSingupPage,"/api/1.0/users");
-const UserSingupPageWithTranslation = withTranslation()(UserSingupPageWithApiProgress);
+const UserSingupPageWithApiProgressForSingupRequest = withApiProgress(
+  UserSingupPage,
+  "/api/1.0/users"
+);
+const UserSingupPageWithApiProgressForAuthRequest = withApiProgress(
+  UserSingupPageWithApiProgressForSingupRequest,
+  "/api/1.0/auth"
+);
+const UserSingupPageWithTranslation = withTranslation()(
+  UserSingupPageWithApiProgressForAuthRequest
+);
 
-export default UserSingupPageWithTranslation;
+export default connect()(UserSingupPageWithTranslation);

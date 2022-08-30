@@ -41,9 +41,11 @@ export function withApiProgress(WrappedComponent, apiPath) {
     };
 
     render() {
-      let { pendingApiCall } = this.state;
+      // let { pendingApiCall } = this.state;
+      let pendingApiCall =
+        this.state.pendingApiCall || this.props.pendingApiCall;
       return (
-        <WrappedComponent pendingApiCall={pendingApiCall} {...this.props} />
+        <WrappedComponent {...this.props} pendingApiCall={pendingApiCall}  />
       );
     }
   };

@@ -19,7 +19,7 @@ export class TopBar extends Component {
           <li>{t("Login")}</li>
         </Link>
         <Link className="nav-link text-light" to={"/singup"}>
-          <li>{t("SingUp")}</li>
+          <li>{t("Sing Up")}</li>
         </Link>
       </ul>
     );
