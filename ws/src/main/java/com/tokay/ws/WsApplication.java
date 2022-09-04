@@ -23,7 +23,7 @@ public class WsApplication {
 
 	// Swagger_2
 	@Bean
-	public Docket api() {
+	 Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.tokay.ws")).build();
 	}

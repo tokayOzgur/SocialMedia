@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 const ProfileCard = (props) => {
   let pathUsername = props.match.params.username;
   let message = "We can not edit";
+
   if (pathUsername === props.loggedInUsername) {
     message = "We can edit";
   }
