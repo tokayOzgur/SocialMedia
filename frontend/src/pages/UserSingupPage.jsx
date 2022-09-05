@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
@@ -6,42 +6,28 @@ import { withApiProgress } from "../shared/ApiProgress";
 import { connect } from "react-redux";
 import { singupHandler } from "../redux/authActions";
 
-class UserSingupPage extends React.Component {
-  state = {
+const UserSingupPage = (props) => {
+  let [form, setForm] = useState({
     username: null,
     displayName: null,
     password: null,
     passwordRepeat: null,
-    errors: {},
-  };
+  });
+  let [errors, setErrors] = useState({});
 
-  onChange = (event) => {
+  let onChange = (event) => {
     const { name, value } = event.target;
-    const errors = { ...this.state.errors };
-    errors[name] = undefined;
-    if (name === "password" || name === "passwordRepeat") {
-      if (name === "password" && value !== this.state.passwordRepeat) {
-        errors.passwordRepeat = this.props.t("Password missmatch!");
-      } else if (name === "passwordRepeat" && value !== this.state.password) {
-        errors.passwordRepeat = this.props.t("Password missmatch!");
-      } else {
-        errors.passwordRepeat = undefined;
-      }
-    }
-    this.setState({
-      [name]: value,
-      errors,
-    });
+    setErrors((previousErrors) => ({ ...previousErrors, [name]: undefined }));
+    setForm((previousForm) => ({ ...previousForm, [name]: value }));
   };
 
-  onClickSingUp = async (event) => {
+  let onClickSingUp = async (event) => {
     event.preventDefault();
 
-    let { history, dispatch } = this.props;
+    let { history, dispatch } = props;
     let { push } = history;
 
-    const { username, displayName, password } = this.state;
-
+    let { username, displayName, password } = form;
     const body = {
       username,
       displayName,
@@ -53,61 +39,68 @@ class UserSingupPage extends React.Component {
       push("/");
     } catch (error) {
       if (error.response.data.validationErrors) {
-        this.setState({ errors: error.response.data.validationErrors });
+        setErrors(error.response.data.validationErrors);
       }
     }
   };
 
-  render() {
-    const { errors } = this.state;
-    const { username, displayName, password, passwordRepeat } = errors;
-    const { t, pendingApiCall } = this.props;
-    return (
-      <div className="container w-50">
-        <form>
-          <div className="mt-3">
-            <h1 className="text-center">{t("Sing Up")}</h1>
-            <Input
-              labelName={t("Username")}
-              inputName={"username"}
-              error={username}
-              onChangeMethod={this.onChange}
-            />
+  const {
+    username: usernameError,
+    displayName: displayNameError,
+    password: passwordError,
+  } = errors;
+  const { t, pendingApiCall } = props;
 
-            <Input
-              labelName={t("Display Name")}
-              inputName={"displayName"}
-              error={displayName}
-              onChangeMethod={this.onChange}
-            />
-
-            <Input
-              labelName={t("Password")}
-              inputName={"password"}
-              error={password}
-              onChangeMethod={this.onChange}
-              inputType={"password"}
-            />
-
-            <Input
-              labelName={t("Password Repeat")}
-              inputName={"passwordRepeat"}
-              error={passwordRepeat}
-              onChangeMethod={this.onChange}
-              inputType={"password"}
-            />
-            <ButtonWithProgress
-              onClick={this.onClickSingUp}
-              disabled={pendingApiCall || passwordRepeat !== undefined}
-              pendingApiCall={pendingApiCall}
-              text={t("Sing Up")}
-            />
-          </div>
-        </form>
-      </div>
-    );
+  let passwordRepeatError;
+  if (form.password !== form.passwordRepeat) {
+    passwordRepeatError = t("Password mismatch");
   }
-}
+
+  return (
+    <div className="container w-50">
+      <form>
+        <div className="mt-3">
+          <h1 className="text-center">{t("Sing Up")}</h1>
+          <Input
+            labelName={t("Username")}
+            inputName={"username"}
+            error={usernameError}
+            onChangeMethod={onChange}
+          />
+
+          <Input
+            labelName={t("Display Name")}
+            inputName={"displayName"}
+            error={displayNameError}
+            onChangeMethod={onChange}
+          />
+
+          <Input
+            labelName={t("Password")}
+            inputName={"password"}
+            error={passwordError}
+            onChangeMethod={onChange}
+            inputType={"password"}
+          />
+
+          <Input
+            labelName={t("Password Repeat")}
+            inputName={"passwordRepeat"}
+            error={passwordRepeatError}
+            onChangeMethod={onChange}
+            inputType={"password"}
+          />
+          <ButtonWithProgress
+            onClick={onClickSingUp}
+            disabled={pendingApiCall || passwordRepeatError !== undefined}
+            pendingApiCall={pendingApiCall}
+            text={t("Sing Up")}
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
 const UserSingupPageWithApiProgressForSingupRequest = withApiProgress(
   UserSingupPage,
   "/api/1.0/users"
