@@ -1,13 +1,24 @@
 import React from "react";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../redux/authActions";
 
 const TopBar = (props) => {
-  const { t, username, isLoggedIn, onLogoutSuccess } = props;
+  const { t } = useTranslation();
 
+  const { username, isLoggedIn } = useSelector((store) => {
+    return {
+      isLoggedIn: store.isLoggedIn,
+      username: store.username,
+    };
+  });
+
+  const dispatch = useDispatch();
+  let onLogoutSuccess = () => {
+    dispatch(logoutSuccess);
+  };
   let links = (
     <ul className="navbar-nav">
       <Link className="nav-link text-light" to={"/login"}>
@@ -52,22 +63,4 @@ const TopBar = (props) => {
   );
 };
 
-let TopBarWithTranslation = withTranslation()(TopBar);
-
-let mapStoreProps = (store) => {
-  return {
-    isLoggedIn: store.isLoggedIn,
-    username: store.username,
-  };
-};
-
-let mapDispatchToProps = (dispatch) => {
-  return {
-    onLogoutSuccess: () => dispatch(logoutSuccess()),
-  };
-};
-
-export default connect(
-  mapStoreProps,
-  mapDispatchToProps
-)(TopBarWithTranslation);
+export default TopBar;

@@ -1,14 +1,15 @@
 import React from "react";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { changeLanguageInApiCalls } from "../api/apiCalls";
 
 const LanguageSelector = (props) => {
+  let {i18n} = useTranslation();
+
   const onChangeLanguage = (language) => {
-    const { i18n } = props;
     i18n.changeLanguage(language);
     changeLanguageInApiCalls(language);
   };
-  const { t } = props;
+  const { t } = useTranslation();
   return (
     <div className="container">
       <div className="mt-3 position-absolute bottom-0 start-0">
@@ -34,4 +35,4 @@ const LanguageSelector = (props) => {
     </div>
   );
 };
-export default withTranslation()(LanguageSelector);
+export default LanguageSelector;

@@ -21,7 +21,7 @@ i18n.use(initReactI18next).init({
             translations: {
                 'Sing Up': 'Kayıt Ol',
                 'Password missmatch!': 'Şifreler eşleşmedi! :)',
-                'Username': 'Kullancı Adı',
+                'Username': 'Kullanıcı Adı',
                 'Display Name': 'Tercih edilen isim',
                 'Password': 'Şifre',
                 'Password Repeat': 'Şifre Tekrarla',

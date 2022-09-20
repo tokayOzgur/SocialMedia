@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Input from "../components/Input";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { withApiProgress } from "../shared/ApiProgress";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { singupHandler } from "../redux/authActions";
 
 const UserSingupPage = (props) => {
@@ -15,6 +15,8 @@ const UserSingupPage = (props) => {
   });
   let [errors, setErrors] = useState({});
 
+  const dispatch = useDispatch();
+
   let onChange = (event) => {
     const { name, value } = event.target;
     setErrors((previousErrors) => ({ ...previousErrors, [name]: undefined }));
@@ -24,7 +26,7 @@ const UserSingupPage = (props) => {
   let onClickSingUp = async (event) => {
     event.preventDefault();
 
-    let { history, dispatch } = props;
+    let { history } = props;
     let { push } = history;
 
     let { username, displayName, password } = form;
@@ -49,7 +51,9 @@ const UserSingupPage = (props) => {
     displayName: displayNameError,
     password: passwordError,
   } = errors;
-  const { t, pendingApiCall } = props;
+
+  const { t } = useTranslation();
+  const { pendingApiCall } = props;
 
   let passwordRepeatError;
   if (form.password !== form.passwordRepeat) {
@@ -109,8 +113,5 @@ const UserSingupPageWithApiProgressForAuthRequest = withApiProgress(
   UserSingupPageWithApiProgressForSingupRequest,
   "/api/1.0/auth"
 );
-const UserSingupPageWithTranslation = withTranslation()(
-  UserSingupPageWithApiProgressForAuthRequest
-);
 
-export default connect()(UserSingupPageWithTranslation);
+export default UserSingupPageWithApiProgressForAuthRequest;
