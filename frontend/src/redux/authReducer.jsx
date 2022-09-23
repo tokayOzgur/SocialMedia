@@ -1,6 +1,6 @@
 import * as ACTIONS from "./Constants";
 
-let defaultState = {
+const defaultState = {
   isLoggedIn: false,
   username: undefined,
   displayName: undefined,
@@ -8,7 +8,7 @@ let defaultState = {
   password: undefined,
 };
 
-let authReducer = (state = { ...defaultState }, action) => {
+const authReducer = (state = { ...defaultState }, action) => {
   if (action.type === ACTIONS.LOGOUT_SUCCESS) {
     return defaultState;
   } else if (action.type === ACTIONS.LOGIN_SUCCESS) {

@@ -19,7 +19,7 @@ i18n.use(initReactI18next).init({
         },
         tr: {
             translations: {
-                'Sing Up': 'Kayıt Ol',
+                'Sign Up': 'Kayıt Ol',
                 'Password missmatch!': 'Şifreler eşleşmedi! :)',
                 'Username': 'Kullanıcı Adı',
                 'Display Name': 'Tercih edilen isim',

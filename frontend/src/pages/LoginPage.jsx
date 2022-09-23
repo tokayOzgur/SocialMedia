@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import Input from "../components/Input";
 import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
-import { withApiProgress } from "../shared/ApiProgress";
+import { useApiProgress } from "../shared/ApiProgress";
 import { useDispatch } from "react-redux";
 import { loginHandler } from "../redux/authActions";
 
 const LoginPage = (props) => {
-  let [username, setUsername] = useState();
-  let [password, setPassword] = useState();
-  let [error, setError] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [error, setError] = useState();
 
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setError(undefined);
@@ -24,7 +24,7 @@ const LoginPage = (props) => {
       password,
     };
 
-    let { history } = props;
+    const { history } = props;
     const { push } = history;
 
     setError(undefined);
@@ -36,41 +36,37 @@ const LoginPage = (props) => {
     }
   };
 
-  let { t } = useTranslation();
-  const { pendingApiCall } = props;
-  let buttonEnabled = username && password;
+  const { t } = useTranslation();
+
+  const pendingApiCall = useApiProgress("/api/1.0/auth");
+
+  const buttonEnabled = username && password;
+
   return (
-    <div className="container w-50">
+    <div className="container">
       <form>
         <h1 className="text-center">{t("Login")}</h1>
         <Input
-          labelName={t("Username")}
-          onChangeMethod={(event) => {
-            setUsername(event.target.value);
-          }}
+          label={t("Username")}
+          onChange={(event) => setUsername(event.target.value)}
         />
         <Input
-          labelName={t("Password")}
-          inputType={"password"}
-          onChangeMethod={(event) => {
-            setPassword(event.target.value);
-          }}
+          label={t("Password")}
+          type="password"
+          onChange={(event) => setPassword(event.target.value)}
         />
-        {error && (
-          <div className="alert text-danger mt-2 bg-dark border border-danger border-2">
-            {t("Error")}: {error}
-          </div>
-        )}
-
-        <ButtonWithProgress
-          onClick={onClickLogin}
-          disabled={!buttonEnabled || pendingApiCall}
-          pendingApiCall={pendingApiCall}
-          text={t("Login")}
-        />
+        {error && <div className="alert alert-danger">{error}</div>}
+        <div className="text-center">
+          <ButtonWithProgress
+            onClick={onClickLogin}
+            disabled={!buttonEnabled || pendingApiCall}
+            pendingApiCall={pendingApiCall}
+            text={t("Login")}
+          />
+        </div>
       </form>
     </div>
   );
 };
 
-export default withApiProgress(LoginPage, "/api/1.0/auth");
+export default LoginPage;

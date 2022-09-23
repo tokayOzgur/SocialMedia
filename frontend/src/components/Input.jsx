@@ -1,21 +1,20 @@
 import React from "react";
 
-export default function Input(props) {
-  const { labelName, inputName, error, onChangeMethod, inputType} = props;
+const Input = (props) => {
+  const { label, error, name, onChange, type } = props;
   const className = error ? "form-control is-invalid" : "form-control";
-
   return (
-    <div>
-      <div className="mt-3">
-        <label>{labelName}:</label>
-        <input
-          name={inputName}
-          className={className}
-          onChange={onChangeMethod}
-          type={inputType}
-        />
-        <div className="invalid-feedback">{error}</div>
-      </div>
+    <div className="form-group">
+      <label>{label}</label>
+      <input
+        className={className}
+        name={name}
+        onChange={onChange}
+        type={type}
+      />
+      <div className="invalid-feedback">{props.error}</div>
     </div>
   );
-}
+};
+
+export default Input;
