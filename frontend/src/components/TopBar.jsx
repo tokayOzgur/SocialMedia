@@ -20,7 +20,7 @@ const TopBar = (props) => {
   };
 
   let links = (
-    <ul className="navbar-nav ml-auto">
+    <ul className="navbar-nav ml-auto float-end">
       <li>
         <Link className="nav-link" to="/login">
           {t("Login")}
@@ -35,7 +35,7 @@ const TopBar = (props) => {
   );
   if (isLoggedIn) {
     links = (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto float-end">
         <li>
           <Link className="nav-link" to={`/user/${username}`}>
             {username}
@@ -53,13 +53,21 @@ const TopBar = (props) => {
   }
 
   return (
-    <div className="shadow-sm bg-light mb-2">
-      <nav className="navbar navbar-light container navbar-expand">
-        <Link className="navbar-brand" to="/">
-          <img src={logo} width="60" alt="Hoaxify Logo" />
-          Hoaxify
-        </Link>
-        {links}
+    <div className="shadow">
+      <nav className="navbar navbar-dark bg-dark mb-3 navbar-expand">
+        <div className="container">
+          <Link className="navbar-brand" to="/">
+            <img
+              src={logo}
+              className="rounded float-start mx-3"
+              width={50}
+              alt="Social Media Logo"
+            />
+            DSM
+          </Link>
+
+          {links}
+        </div>
       </nav>
     </div>
   );

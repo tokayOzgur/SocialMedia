@@ -5,7 +5,7 @@ i18n.use(initReactI18next).init({
     resources: {
         en: {
             translations: {
-                'Sing Up': 'Sing Up',
+                'Sign Up': 'Sing Up',
                 'Password missmatch!': 'Password missmatch! :)',
                 'Username': 'Username',
                 'Display Name': 'Display Name',

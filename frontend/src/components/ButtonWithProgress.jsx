@@ -4,12 +4,17 @@ const ButtonWithProgress = (props) => {
   const { onClick, pendingApiCall, disabled, text } = props;
 
   return (
-    <button className="btn btn-primary" onClick={onClick} disabled={disabled}>
-      {pendingApiCall && (
-        <span className="spinner-border spinner-border-sm"></span>
-      )}{" "}
-      {text}
-    </button>
+    <div>
+    <div className="d-grid gap-2 mt-3">
+      <button
+        disabled={disabled}
+        className="btn btn-dark btn-block"
+        onClick={onClick}
+      >
+        {pendingApiCall&& <span className="spinner-border spinner-border-sm"></span>}{text}
+      </button>
+    </div>
+  </div>
   );
 };
 
