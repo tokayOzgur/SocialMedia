@@ -26,4 +26,6 @@ public class AuthController {
 	public ResponseEntity<?> handleAuthentication(@CurrentUser User user) {
 		return ResponseEntity.ok(user);
 	}
+	
+	
 }

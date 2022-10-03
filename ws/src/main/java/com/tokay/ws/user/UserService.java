@@ -1,8 +1,7 @@
 package com.tokay.ws.user;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +27,8 @@ public class UserService {
 		userRepository.save(entity);
 	}
 
-	public List<User> getUsersList() {
-		return userRepository.findAll();
+	public Page<User> getUsersList(Pageable page) {
+		return userRepository.findAll(page);
 
 	}
 
