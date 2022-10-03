@@ -14,7 +14,8 @@ i18n.use(initReactI18next).init({
                 'Choose a language:': 'Choose a language:', 
                 'Login': 'Login',
                 'Error':'Error',
-                'Logout':'Logout'
+                'Logout':'Logout',
+                Users: 'Users'
             }
         },
         tr: {
@@ -29,6 +30,7 @@ i18n.use(initReactI18next).init({
                 'Login':'Giriş Yap',
                 'Error':'Hata',
                 'Logout':'Çıkış Yap',
+                Users: 'Kullanıcılar'
             }
         }
     },
