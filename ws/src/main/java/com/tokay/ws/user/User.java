@@ -15,8 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.tokay.ws.shared.Views;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -37,12 +36,10 @@ public class User implements UserDetails{
 	@NotNull(message = "{tokay.constraints.username.NotNull.message}")
 	@Size(min = 4, max = 50, message = "{tokay.constraints.username.Size.message}")
 	@UniqueUsername
-	@JsonView(Views.Base.class)
 	private String username;
 
 	@NotNull(message = "{tokay.constraints.displayName.NotNull.message}")
 	@Size(min = 4, max = 30, message = "{tokay.constraints.displayName.Size.message}")
-	@JsonView(Views.Base.class)
 	private String displayName;
 
 	@NotNull(message = "{tokay.constraints.password.NotNull.message}")
@@ -50,30 +47,34 @@ public class User implements UserDetails{
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{tokay.constraints.password.Pattern.message}")
 	private String password;
 
-	@JsonView(Views.Base.class)
 	private String image;
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return AuthorityUtils.createAuthorityList("Role_user");
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isEnabled() {
 		return true;
 	}

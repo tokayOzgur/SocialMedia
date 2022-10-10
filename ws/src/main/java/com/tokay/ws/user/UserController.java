@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tokay.ws.shared.GenericResponse;
+import com.tokay.ws.user.vm.UserVM;
 
 /**
  * @author tokay
@@ -29,8 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping("/api/1.0/users")
-//	@JsonView(Views.Base.class)
-	public Page<User> getUsersList(Pageable page) {
-		return userService.getUsersList(page);
+	public Page<UserVM> getUsersList(Pageable page) {
+		return userService.getUsersList(page).map(UserVM::new);
 	}
 }

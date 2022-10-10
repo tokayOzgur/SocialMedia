@@ -29,7 +29,6 @@ public class UserService {
 
 	public Page<User> getUsersList(Pageable page) {
 		return userRepository.findAll(page);
-
 	}
 
 }
