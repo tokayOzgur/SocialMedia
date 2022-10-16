@@ -16,6 +16,7 @@ const UserListItem = props => {
       <span className="pl-2">
         {displayName} @{username}
       </span>
+      <hr></hr>
     </Link>
   );
 };

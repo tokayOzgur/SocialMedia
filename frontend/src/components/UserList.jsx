@@ -40,7 +40,6 @@ const UserList = () => {
           <UserListItem key={user.username} user={user} />
         ))}
       </div>
-      <hr></hr>
       <div>
         {first === false && (
           <button
