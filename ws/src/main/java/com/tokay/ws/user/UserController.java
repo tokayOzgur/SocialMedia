@@ -25,7 +25,7 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping("/api/1.0/users")
-	public GenericResponse createUser(@Valid @RequestBody User user) {
+	public GenericResponse createUser(@Valid @RequestBody User user) { 
 		userService.addUser(user);
 		return new GenericResponse("user created");
 	}
