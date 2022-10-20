@@ -12,7 +12,7 @@ import lombok.Data;
  *
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)//Null olanlar hariç
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiError {
 
 	private int status;

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-//	@Autowired // Kullanımına gerek yok, tek bir field olduğu için spring hallediyor
 	UserRepository userRepository;
 
 	PasswordEncoder passwordEncoder;
@@ -27,7 +26,10 @@ public class UserService {
 		userRepository.save(entity);
 	}
 
-	public Page<User> getUsersList(Pageable page) {
+	public Page<User> getUsersList(Pageable page, User user) {
+		if (user != null) {
+			return userRepository.findByUsernameNot(user.getUsername(), page); 
+		}
 		return userRepository.findAll(page);
 	}
 
