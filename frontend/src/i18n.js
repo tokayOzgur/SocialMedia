@@ -1,4 +1,5 @@
 import i18n from 'i18next';
+import { Next } from 'react-bootstrap/esm/PageItem';
 import { initReactI18next } from 'react-i18next';
 
 i18n.use(initReactI18next).init({
@@ -11,10 +12,14 @@ i18n.use(initReactI18next).init({
                 'Display Name': 'Display Name',
                 'Password': 'Password',
                 'Password Repeat': 'Password Repeat',
-                'Choose a language:': 'Choose a language:', 
+                'Choose a language:': 'Choose a language:',
                 'Login': 'Login',
-                'Error':'Error',
-                'Logout':'Logout'
+                'Error': 'Error',
+                'Logout': 'Logout',
+                Users: 'Users',
+                Next: "Next >",
+                Previous: "< Previous",
+                'Load Failure': 'Load Failure'
             }
         },
         tr: {
@@ -26,9 +31,13 @@ i18n.use(initReactI18next).init({
                 'Password': 'Şifre',
                 'Password Repeat': 'Şifre Tekrarla',
                 'Choose a language:': ' Dil seç:',
-                'Login':'Giriş Yap',
-                'Error':'Hata',
-                'Logout':'Çıkış Yap',
+                'Login': 'Giriş Yap',
+                'Error': 'Hata',
+                'Logout': 'Çıkış Yap',
+                Users: 'Kullanıcılar',
+                Next: "Sonraki >",
+                Previous: "< Önceki",
+                'Load Failure': 'Liste alınamadı'
             }
         }
     },

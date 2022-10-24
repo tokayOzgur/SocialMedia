@@ -9,7 +9,6 @@ spring:
     generate-ddl: true
     hibernate:
             ddl-auto: update
-   
     properties:
         javax:
           persistance:
@@ -18,4 +17,12 @@ spring:
   h2:
     console:
         enabled: true
-    
+        
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+  jackson:
+    mapper:
+      DEFAULT_VIEW_INCLUSION : true

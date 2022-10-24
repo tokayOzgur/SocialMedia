@@ -1,6 +1,7 @@
 package com.tokay.ws.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-//	@Autowired // Kullanımına gerek yok, tek bir field olduğu için spring hallediyor
 	UserRepository userRepository;
 
 	PasswordEncoder passwordEncoder;
@@ -25,4 +25,12 @@ public class UserService {
 		entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
 		userRepository.save(entity);
 	}
+
+	public Page<User> getUsersList(Pageable page, User user) {
+		if (user != null) {
+			return userRepository.findByUsernameNot(user.getUsername(), page); 
+		}
+		return userRepository.findAll(page);
+	}
+
 }
