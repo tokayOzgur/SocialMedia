@@ -1,5 +1,4 @@
 import i18n from 'i18next';
-import { Next } from 'react-bootstrap/esm/PageItem';
 import { initReactI18next } from 'react-i18next';
 
 i18n.use(initReactI18next).init({
@@ -20,7 +19,11 @@ i18n.use(initReactI18next).init({
                 Next: "Next >",
                 Previous: "< Previous",
                 'Load Failure': 'Load Failure',
-                'User not found': 'User not found'
+                'User not found': 'User not found',
+                Edit: 'Edit',
+                'Change Display Name': 'Change Display Name',
+                Save: 'Save',
+                Cancel: 'Cancel'
             }
         },
         tr: {
@@ -39,7 +42,11 @@ i18n.use(initReactI18next).init({
                 Next: "Sonraki >",
                 Previous: "< Önceki",
                 'Load Failure': 'Liste alınamadı',
-                'User not found': 'Kullanıcı bulunamadı!'
+                'User not found': 'Kullanıcı bulunamadı!',
+                Edit: 'Düzenle',
+                'Change Display Name': 'Görünür İsminizi Değiştirin',
+                Save: 'Kaydet',
+                Cancel: 'İptal Et'
             }
         }
     },
