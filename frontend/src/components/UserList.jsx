@@ -3,6 +3,7 @@ import { getUsers } from "../api/apiCalls";
 import { useTranslation } from "react-i18next";
 import UserListItem from "./UserListItem";
 import { useApiProgress } from "../shared/ApiProgress";
+import Spinner from "./Spinner";
 
 const UserList = () => {
   const [page, setPage] = useState({
@@ -49,7 +50,10 @@ const UserList = () => {
         </button>
       )}
       {last === false && (
-        <button className="btn btn-sm btn-dark m-1 float-right" onClick={onClickNext}>
+        <button
+          className="btn btn-sm btn-dark m-1 float-right"
+          onClick={onClickNext}
+        >
           {t("Next")}
         </button>
       )}
@@ -64,6 +68,7 @@ const UserList = () => {
         </div>
       </div>
     );
+    actionDiv = <Spinner />;
   }
 
   return (
@@ -74,10 +79,10 @@ const UserList = () => {
           <UserListItem key={user.username} user={user} />
         ))}
       </div>
-        {actionDiv}
-        {loadFailure && (
-          <div className="text-center text-danger">{t("Load Failure")}</div>
-        )}
+      {actionDiv}
+      {loadFailure && (
+        <div className="text-center text-danger">{t("Load Failure")}</div>
+      )}
     </div>
   );
 };
