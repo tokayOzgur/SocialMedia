@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tokay.ws.error.NotFoundException;
+import com.tokay.ws.user.vm.UserUpdateVM;
 
 /**
  * @author tokay
@@ -36,11 +37,16 @@ public class UserService {
 	}
 
 	public User getByUsername(String username) {
-		User userInDb = userRepository.findByUsername(username);
-		if (userInDb == null) {
+		if (userRepository.findByUsername(username) == null) {
 			throw new NotFoundException();
 		}
-		return userInDb;
+		return userRepository.findByUsername(username);
+	}
+
+	public User updateUser(String username, UserUpdateVM updatedUser) {
+		User inDB = getByUsername(username);
+		inDB.setDisplayName(updatedUser.getDisplayName());
+		return userRepository.save(inDB);
 	}
 
 }
