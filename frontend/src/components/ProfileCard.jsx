@@ -15,12 +15,17 @@ const ProfileCard = (props) => {
     username: store.username,
   }));
   const routeParams = useParams();
-
+  const pathUsername = routeParams.username;
   const [user, setUser] = useState({});
+  const [editable, setEditable] = useState(false);
 
   useEffect(() => {
     setUser(props.user);
   }, [props.user]);
+
+  useEffect(() => {
+    setEditable(pathUsername === loggedInUsername);
+  }, [pathUsername, loggedInUsername]);
 
   const { username, displayName, image } = user;
 
@@ -47,10 +52,6 @@ const ProfileCard = (props) => {
 
   const pendingApiCall = useApiProgress("put", "/api/1.0/users/" + username);
 
-  const pathUsername = routeParams.username;
-
-  const editable = pathUsername === loggedInUsername;
-
   return (
     <div className="card text-center">
       <div className="card-header">
@@ -68,10 +69,13 @@ const ProfileCard = (props) => {
             <h3>
               {displayName}@{username}
             </h3>
-              {editable && (
-              <button className="btn btn-success d-inline-flex" onClick={() => setInEditMode(true)}>
+            {editable && (
+              <button
+                className="btn btn-success d-inline-flex"
+                onClick={() => setInEditMode(true)}
+              >
                 <i className="material-icons">edit</i>
-                {t('Edit')}
+                {t("Edit")}
               </button>
             )}
           </>
