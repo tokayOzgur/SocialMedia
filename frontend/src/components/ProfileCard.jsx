@@ -29,7 +29,6 @@ const ProfileCard = (props) => {
   }, [pathUsername, loggedInUsername]);
 
   const { username, displayName, image } = user;
-
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -44,6 +43,7 @@ const ProfileCard = (props) => {
   const onClickSave = async () => {
     const body = {
       displayName: updatedDisplayName,
+      image: newImage,
     };
     try {
       const response = await updateUser(username, body);
@@ -71,8 +71,7 @@ const ProfileCard = (props) => {
           width="200"
           height="200"
           alt={`${username} profile`}
-          image={image}
-          tempImage={newImage}
+          image={newImage || image}
         />
       </div>
       <div className="card-body">
@@ -102,7 +101,7 @@ const ProfileCard = (props) => {
               }}
             />
             <input type="file" onChange={onChangeFile} />
-            <div className="mt-3">
+            <div>
               <ButtonWithProgress
                 className="btn btn-primary d-inline-flex"
                 onClick={onClickSave}

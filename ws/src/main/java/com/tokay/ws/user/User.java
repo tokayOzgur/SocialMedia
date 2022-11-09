@@ -2,10 +2,12 @@ package com.tokay.ws.user;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -22,8 +24,8 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "users")
-public class User implements UserDetails{
-	
+public class User implements UserDetails {
+
 	/**
 	 * 
 	 */
@@ -32,7 +34,7 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@NotNull(message = "{tokay.constraints.username.NotNull.message}")
 	@Size(min = 4, max = 50, message = "{tokay.constraints.username.Size.message}")
 	@UniqueUsername
@@ -44,9 +46,10 @@ public class User implements UserDetails{
 
 	@NotNull(message = "{tokay.constraints.password.NotNull.message}")
 	@Size(min = 8, message = "{tokay.constraints.password.Size.message}")
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{tokay.constraints.password.Pattern.message}")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{tokay.constraints.password.Pattern.message}")
 	private String password;
 
+	@Lob
 	private String image;
 
 	@Override
