@@ -159,3 +159,30 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:622)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 82 more
+2022-11-08 22:22:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM... (145311)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-08 22:23:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM... (145311)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-08 22:31:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM... (145311)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-08 22:33:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM... (145311)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-08 22:37:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM... (145311)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-08 22:38:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwM... (145311)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-09 21:14:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD9gAAAmwCAIAAADkhYaYAAABN2lDQ1BBZG9iZSBSR0IgKDE5OTgpAAAokZWPv0rDUBSHvxtFxaFWCOLgc... (1293630)"; SQL statement:
+update users set display_name=?, image=?, password=?, username=? where id=? [22001-200]
+2022-11-09 21:23:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMAGE VARCHAR(255)": "'data:image/jpeg;base64,/9j/4QAWRXhpZgAATU0AKgAAAAgAAAAAAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwg... (53439)"; SQL statement:
+update users set display_name=?, image=?, image2=?, password=?, username=? where id=? [22001-200]
+2022-11-09 21:26:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "IMAGE[*]"; expected "INSERT"; SQL statement:
+IMAGE [42001-200]
