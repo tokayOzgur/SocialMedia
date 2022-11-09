@@ -71,7 +71,8 @@ const ProfileCard = (props) => {
           width="200"
           height="200"
           alt={`${username} profile`}
-          image={newImage || image}
+          image={image}
+          tempimage={newImage}
         />
       </div>
       <div className="card-body">
