@@ -1,11 +1,14 @@
 package com.tokay.ws.user;
 
+import java.io.IOException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tokay.ws.error.NotFoundException;
+import com.tokay.ws.file.FileService;
 import com.tokay.ws.user.vm.UserUpdateVM;
 
 /**
@@ -19,9 +22,12 @@ public class UserService {
 
 	PasswordEncoder passwordEncoder;
 
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	FileService fileService;
+
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, FileService fileService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.fileService = fileService;
 	}
 
 	public void addUser(User entity) {
@@ -47,9 +53,14 @@ public class UserService {
 		User inDB = getByUsername(username);
 		inDB.setDisplayName(updatedUser.getDisplayName());
 		if (updatedUser.getImage() != null) {
-			inDB.setImage(updatedUser.getImage());
+//			inDB.setImage(updatedUser.getImage());
+			try {
+				String storedFileName = fileService.writeBase64EncodeStringToFile(updatedUser.getImage());
+				inDB.setImage(storedFileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return userRepository.save(inDB);
 	}
-
 }
