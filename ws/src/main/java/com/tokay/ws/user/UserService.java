@@ -54,9 +54,11 @@ public class UserService {
 		inDB.setDisplayName(updatedUser.getDisplayName());
 		if (updatedUser.getImage() != null) {
 //			inDB.setImage(updatedUser.getImage());
+			String oldImageName = inDB.getImage();
 			try {
 				String storedFileName = fileService.writeBase64EncodeStringToFile(updatedUser.getImage());
 				inDB.setImage(storedFileName);
+				fileService.deleteOldImage(oldImageName);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
