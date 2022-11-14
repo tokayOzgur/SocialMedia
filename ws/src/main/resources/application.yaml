@@ -16,13 +16,22 @@ spring:
               mode: none
   h2:
     console:
-        enabled: true
-        
+        enabled: true    
   data:
     web:
       pageable:
         default-page-size: 10
         max-page-size: 100
-  jackson:
-    mapper:
-      DEFAULT_VIEW_INCLUSION : true
+  profiles:
+    active:
+    - dev
+---
+spring:
+  profiles: production
+tokay:
+  upload-path: storage-production
+---
+spring:
+  profiles: dev
+tokay:
+  upload-path: storage-dev

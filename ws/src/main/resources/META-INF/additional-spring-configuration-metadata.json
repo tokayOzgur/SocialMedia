@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "spring.properties.javax.persistance.validation.mode",
-  "type": "java.lang.String",
-  "description": "A description for 'spring.properties.javax.persistance.validation.mode'"
-}]}
+{"properties": [
+  {
+    "name": "spring.properties.javax.persistance.validation.mode",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.properties.javax.persistance.validation.mode'"
+  },
+  {
+    "name": "tokay.upload-path",
+    "type": "java.lang.String",
+    "description": "A description for 'tokay.upload-path'"
+  }
+]}
