@@ -36,6 +36,13 @@ const ProfileCard = (props) => {
     }));
   }, [updatedDisplayName]);
 
+  useEffect(() => {
+    setValidationErrors((previousValidationErrors) => ({
+      ...previousValidationErrors,
+      image: undefined,
+    }));
+  }, [newImage]);
+
   const { username, displayName, image } = user;
   const { t } = useTranslation();
 
@@ -80,8 +87,7 @@ const ProfileCard = (props) => {
 
   const pendingApiCall = useApiProgress("put", "/api/1.0/users/" + username);
 
-  const { displayName: displayNameError } = validationErrors;
-
+  const { displayName: displayNameError, image: imageError } = validationErrors;
   return (
     <div className="card text-center">
       <div className="card-header">
@@ -112,17 +118,21 @@ const ProfileCard = (props) => {
           </>
         )}
         {inEditMode && (
-          <div>
-            <Input
-              label={t("Change Display Name")}
-              defaultValue={displayName}
-              onChange={(event) => {
-                setUpdatedDisplayName(event.target.value);
-              }}
-              error={displayNameError}
-            />
-            <input type="file" onChange={onChangeFile} />
-            <div>
+          <div className="row p-5">
+            <div className="col-12 w-auto m-auto">
+              <Input
+                label={t("Change Display Name")}
+                defaultValue={displayName}
+                onChange={(event) => {
+                  setUpdatedDisplayName(event.target.value);
+                }}
+                error={displayNameError}
+              />
+            </div>
+            <div className="col-12">
+              <Input type="file" onChange={onChangeFile} error={imageError} />
+            </div>
+            <div className="col-12 m-auto">
               <ButtonWithProgress
                 className="btn btn-primary d-inline-flex"
                 onClick={onClickSave}
@@ -136,7 +146,7 @@ const ProfileCard = (props) => {
                 }
               />
               <button
-                className="btn btn-light d-inline-flex ml-1"
+                className="btn btn-light d-inline-flex "
                 onClick={() => setInEditMode(false)}
                 disabled={pendingApiCall}
               >

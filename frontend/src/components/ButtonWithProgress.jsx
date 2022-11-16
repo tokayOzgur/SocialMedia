@@ -5,7 +5,7 @@ const ButtonWithProgress = (props) => {
 
   return (
     <div>
-      <div className="d-grid gap-2 mt-3">
+      <div className="my-3">
         <button
           className={className || "btn btn-primary"}
           onClick={onClick}
