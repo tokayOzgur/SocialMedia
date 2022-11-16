@@ -9,33 +9,34 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.tika.Tika;
 import org.springframework.stereotype.Service;
 
 import com.tokay.ws.configuration.AppConfiguration;
 
 @Service
 public class FileService {
-
-	@Autowired
 	AppConfiguration appConfiguration;
+	Tika tika;
+
+	public FileService(AppConfiguration appConfiguration) {
+		super();
+		this.appConfiguration = appConfiguration;
+		this.tika = new Tika();
+	}
 
 	public String writeBase64EncodeStringToFile(String image) throws IOException {
 		String fileName = generateRandomName();
 		File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
+		byte[] base64encoded = Base64.getDecoder().decode(image);
 		OutputStream os = new FileOutputStream(target);
-		try {
-			byte[] base64encoded = Base64.getDecoder().decode(image);
-			os.write(base64encoded);
-		} finally {
-			os.close();
-		}
-
+		os.write(base64encoded);
+		os.close();
 		return fileName;
 	}
 
 	public String generateRandomName() {
-		return UUID.randomUUID().toString().replaceAll("-", "");
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 
 	public void deleteOldImage(String oldImageName) {
@@ -47,5 +48,10 @@ public class FileService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String detectType(String value) {
+		byte[] base64encoded = Base64.getDecoder().decode(value);
+		return tika.detect(base64encoded);
 	}
 }
