@@ -92,7 +92,7 @@ const ProfileCard = (props) => {
     <div className="card text-center">
       <div className="card-header">
         <ProfileImageWithDefault
-          className="rounded-circle shadow"
+          className="rounded shadow"
           width="200"
           height="200"
           alt={`${username} profile`}
