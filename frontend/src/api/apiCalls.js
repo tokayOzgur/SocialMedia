@@ -33,6 +33,6 @@ export const updateUser = (username, body) => {
   return axios.put(`/api/1.0/users/${username}`, body);
 };
 
-export const postDsm = dsm => {
-  return axios.post('/api/1.0/hoaxes', dsm);
+export const postGonderi = gonderi => {
+  return axios.post('/api/1.0/gonderi', gonderi);
 };

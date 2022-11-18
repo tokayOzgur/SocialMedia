@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ProfileImageWithDefault from "./ProfileImageWithDefault";
 import { useTranslation } from "react-i18next";
-import { postDsm } from "../api/apiCalls";
+import { postGonderi } from "../api/apiCalls";
 
-const DsmSubmit = () => {
+const GonderiSubmit = () => {
   const { image } = useSelector((store) => ({ image: store.image }));
 
   const [focused, setFocused] = useState(false);
-  const [dsm, setDsm] = useState("");
+  const [gonderi, setGonderi] = useState("");
   const { t } = useTranslation();
 
   useEffect(() => {
     if (!focused) {
-      setDsm("");
+      setGonderi("");
     }
   }, [focused]);
 
-  const onClickDsm = async () => {
+  const onClickGonderi = async () => {
     const body = {
-      content: dsm,
+      content: gonderi,
     };
 
     try {
-      await postDsm(body);
+      await postGonderi(body);
+      setFocused(false);
     } catch (error) {}
   };
 
@@ -40,13 +41,13 @@ const DsmSubmit = () => {
           className="form-control"
           rows={focused ? "3" : "1"}
           onFocus={() => setFocused(true)}
-          onChange={(event) => setDsm(event.target.value)}
-          value={dsm}
+          onChange={(event) => setGonderi(event.target.value)}
+          value={gonderi}
         />
         {focused && (
           <div className="text-right mt-1">
-            <button className="btn btn-primary" onClick={onClickDsm}>
-              Hoaxify
+            <button className="btn btn-primary" onClick={onClickGonderi}>
+              Paylaş
             </button>
             <button
               className="btn btn-light d-inline-flex ml-1"
@@ -62,4 +63,4 @@ const DsmSubmit = () => {
   );
 };
 
-export default DsmSubmit;
+export default GonderiSubmit;
