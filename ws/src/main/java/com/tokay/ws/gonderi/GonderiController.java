@@ -1,5 +1,7 @@
 package com.tokay.ws.gonderi;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +16,7 @@ public class GonderiController {
 	GonderiService gonderiService;
 
 	@PostMapping("/api/1.0/gonderi")
-	GenericResponse saveGonderi(@RequestBody Gonderi gonderi) {
+	GenericResponse saveGonderi(@Valid @RequestBody Gonderi gonderi) {
 		gonderiService.save(gonderi);
 		return new GenericResponse("Gonderi is saved.");
 	}

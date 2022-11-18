@@ -10,12 +10,18 @@ const GonderiSubmit = () => {
   const [focused, setFocused] = useState(false);
   const [gonderi, setGonderi] = useState("");
   const { t } = useTranslation();
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (!focused) {
       setGonderi("");
+      setErrors({});
     }
   }, [focused]);
+
+  useEffect(() => {
+    setErrors({});
+  }, [gonderi]);
 
   const onClickGonderi = async () => {
     const body = {
@@ -25,9 +31,16 @@ const GonderiSubmit = () => {
     try {
       await postGonderi(body);
       setFocused(false);
-    } catch (error) {}
+    } catch (error) {
+      if (error.response.data.validationErrors) {
+        setErrors(error.response.data.validationErrors);
+      }
+    }
   };
-
+  let textAreaClass = "form-control ";
+  if (errors.content) {
+    textAreaClass += " is-invalid";
+  }
   return (
     <div className="card p-1 flex-row">
       <ProfileImageWithDefault
@@ -37,13 +50,14 @@ const GonderiSubmit = () => {
         className="rounded m-1"
       />
       <div className="flex-fill">
-        <textarea
-          className="form-control"
+        <textarea 
+          className={textAreaClass}
           rows={focused ? "3" : "1"}
           onFocus={() => setFocused(true)}
           onChange={(event) => setGonderi(event.target.value)}
           value={gonderi}
         />
+        <div className="invalid-feedback">{errors.content}</div>
         {focused && (
           <div className="text-right mt-1">
             <button className="btn btn-primary" onClick={onClickGonderi}>
@@ -56,6 +70,7 @@ const GonderiSubmit = () => {
               <i className="material-icons">close</i>
               {t("Cancel")}
             </button>
+            <div className="invalid-feedback">{errors.content}</div>
           </div>
         )}
       </div>
