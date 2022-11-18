@@ -5,7 +5,7 @@ const ButtonWithProgress = (props) => {
 
   return (
     <div>
-      <div className="my-3">
+      <div className="my-2">
         <button
           className={className || "btn btn-primary"}
           onClick={onClick}

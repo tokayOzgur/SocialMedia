@@ -3,9 +3,12 @@ import { useSelector } from "react-redux";
 import ProfileImageWithDefault from "./ProfileImageWithDefault";
 import { useTranslation } from "react-i18next";
 import { postGonderi } from "../api/apiCalls";
+import { useApiProgress } from "../shared/ApiProgress";
+import ButtonWithProgress from "./ButtonWithProgress";
 
 const GonderiSubmit = () => {
   const { image } = useSelector((store) => ({ image: store.image }));
+  const pendingApiCall = useApiProgress("post", "/api/1.0/gonderi");
 
   const [focused, setFocused] = useState(false);
   const [gonderi, setGonderi] = useState("");
@@ -50,7 +53,7 @@ const GonderiSubmit = () => {
         className="rounded m-1"
       />
       <div className="flex-fill">
-        <textarea 
+        <textarea
           className={textAreaClass}
           rows={focused ? "3" : "1"}
           onFocus={() => setFocused(true)}
@@ -59,17 +62,22 @@ const GonderiSubmit = () => {
         />
         <div className="invalid-feedback">{errors.content}</div>
         {focused && (
-          <div className="text-right mt-1">
-            <button className="btn btn-primary" onClick={onClickGonderi}>
-              Paylaş
-            </button>
-            <button
-              className="btn btn-light d-inline-flex ml-1"
-              onClick={() => setFocused(false)}
-            >
-              <i className="material-icons">close</i>
-              {t("Cancel")}
-            </button>
+          <div className="mt-1 d-flex align-items-start">
+              <ButtonWithProgress
+                className="btn btn-primary "
+                onClick={onClickGonderi}
+                text="Paylaş"
+                pendingApiCall={pendingApiCall}
+                disabled={pendingApiCall}
+              />
+              <button
+                className="btn btn-light d-inline-flex m-2  border"
+                onClick={() => setFocused(false)}
+                disabled={pendingApiCall}
+              >
+                <i className="material-icons">close</i>
+                {t("Cancel")}
+              </button>
             <div className="invalid-feedback">{errors.content}</div>
           </div>
         )}
