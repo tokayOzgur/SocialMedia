@@ -36,3 +36,7 @@ export const updateUser = (username, body) => {
 export const postGonderi = gonderi => {
   return axios.post('/api/1.0/gonderi', gonderi);
 };
+
+export const getGonderiler = () => {
+  return axios.get('/api/1.0/gonderiler');
+};
