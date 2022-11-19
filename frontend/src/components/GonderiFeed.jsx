@@ -4,19 +4,28 @@ import { useTranslation } from "react-i18next";
 import GonderiView from "./GonderiView";
 
 const GonderiFeed = () => {
-  const [gonderiPage, setGonderiPage] = useState({ content: [], last: true });
+  const [gonderiPage, setGonderiPage] = useState({
+    content: [],
+    last: true,
+    number: 0,
+  });
   const { t } = useTranslation();
 
   useEffect(() => {
-    const loadGonderiler = async () => {
-      try {
-        const response = await getGonderiler();
-        setGonderiPage(response.data);
-      } catch (error) {}
-    };
     loadGonderiler();
   }, []);
-  const { content, last } = gonderiPage;
+
+  const loadGonderiler = async (page) => {
+    try {
+      const response = await getGonderiler(page);
+      setGonderiPage((previousGonderiPage) => ({
+        ...response.data,
+        content: [...previousGonderiPage.content, ...response.data.content],
+      }));
+    } catch (error) {}
+  };
+
+  const { content, last, number } = gonderiPage;
 
   if (content.length === 0) {
     return (
@@ -32,7 +41,11 @@ const GonderiFeed = () => {
         return <GonderiView key={gonderi.id} gonderi={gonderi} />;
       })}
       {!last && (
-        <div className="alert alert-secondary text-center">
+        <div
+          className="alert alert-secondary text-center"
+          style={{ cursor: "pointer" }}
+          onClick={() => loadGonderiler(number + 1)}
+        >
           {t("Load old posts")}
         </div>
       )}

@@ -29,7 +29,7 @@ public class GonderiController {
 	}
 
 	@GetMapping("/gonderiler")
-	Page<Gonderi> getGonderiler(@PageableDefault(sort = "id", direction = Direction.DESC) Pageable page) {
+	Page<Gonderi> getGonderiler(@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page) {
 		return gonderiService.getGonderiler(page);
 	}
 }
