@@ -25,7 +25,8 @@ i18n.use(initReactI18next).init({
                 Save: 'Save',
                 Cancel: 'Cancel',
                 'My Profile': 'My Profile',
-                'There are no posts': 'There are no posts'
+                'There are no posts': 'There are no posts',
+                'Load old posts': 'Load old posts'
             }
         },
         tr: {
@@ -50,7 +51,8 @@ i18n.use(initReactI18next).init({
                 Save: 'Kaydet',
                 Cancel: 'İptal Et',
                 'My Profile': 'Hesabım',
-                'There are no posts': 'Gönderi bulunamadı'
+                'There are no posts': 'Gönderi bulunamadı',
+                'Load old posts': "Eski gönderileri yükle"
             }
         }
     },

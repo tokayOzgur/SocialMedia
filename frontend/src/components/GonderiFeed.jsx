@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import GonderiView from "./GonderiView";
 
 const GonderiFeed = () => {
-  const [gonderiPage, setGonderiPage] = useState({ content: [] });
+  const [gonderiPage, setGonderiPage] = useState({ content: [], last: true });
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const GonderiFeed = () => {
     };
     loadGonderiler();
   }, []);
-  const { content } = gonderiPage;
+  const { content, last } = gonderiPage;
 
   if (content.length === 0) {
     return (
@@ -31,6 +31,11 @@ const GonderiFeed = () => {
       {content.map((gonderi) => {
         return <GonderiView key={gonderi.id} gonderi={gonderi} />;
       })}
+      {!last && (
+        <div className="alert alert-secondary text-center">
+          {t("Load old posts")}
+        </div>
+      )}
     </div>
   );
 };
