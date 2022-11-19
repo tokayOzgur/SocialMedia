@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { getGonderiler } from '../api/apiCalls';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import { getGonderiler } from "../api/apiCalls";
+import { useTranslation } from "react-i18next";
+import GonderiView from "./GonderiView";
 
 const GonderiFeed = () => {
   const [gonderiPage, setGonderiPage] = useState({ content: [] });
@@ -15,11 +16,23 @@ const GonderiFeed = () => {
     };
     loadGonderiler();
   }, []);
-  if (gonderiPage.content.length === 0) {
-    return <div className="alert alert-secondary text-center">{t('There are no posts')}</div>;
+  const { content } = gonderiPage;
+
+  if (content.length === 0) {
+    return (
+      <div className="alert alert-secondary text-center">
+        {t("There are no posts")}
+      </div>
+    );
   }
 
-  return <div></div>;
+  return (
+    <div>
+      {content.map((gonderi) => {
+        return <GonderiView key={gonderi.id} gonderi={gonderi} />;
+      })}
+    </div>
+  );
 };
 
 export default GonderiFeed;
