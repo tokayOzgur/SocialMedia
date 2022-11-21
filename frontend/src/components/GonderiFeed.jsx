@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import GonderiView from "./GonderiView";
 import { useApiProgress } from "../shared/ApiProgress";
 import Spinner from "./Spinner";
+import { useParams } from "react-router-dom";
 
 const GonderiFeed = () => {
   const [gonderiPage, setGonderiPage] = useState({
@@ -12,8 +13,12 @@ const GonderiFeed = () => {
     number: 0,
   });
   const { t } = useTranslation();
+  const { username } = useParams();
 
-  const pendingApiCall = useApiProgress("get", "/api/1.0/gonderiler");
+  const path = username
+    ? `/api/1.0/users/${username}/gonderiler?page=`
+    : "/api/1.0/gonderiler?page=";
+  const pendingApiCall = useApiProgress("get", path);
 
   useEffect(() => {
     loadGonderiler();
@@ -21,7 +26,7 @@ const GonderiFeed = () => {
 
   const loadGonderiler = async (page) => {
     try {
-      const response = await getGonderiler(page);
+       const response = await getGonderiler(username, page);
       setGonderiPage((previousGonderiPage) => ({
         ...response.data,
         content: [...previousGonderiPage.content, ...response.data.content],

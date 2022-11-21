@@ -37,6 +37,7 @@ export const postGonderi = gonderi => {
   return axios.post('/api/1.0/gonderi', gonderi);
 };
 
-export const getGonderiler = (page = 0) => {
-  return axios.get('/api/1.0/gonderiler?page=' + page);
-};
+export const getGonderiler = (username, page = 0) => {
+  const path = username ? `/api/1.0/users/${username}/gonderiler?page=` : '/api/1.0/gonderiler?page=';
+  return axios.get(path + page);
+}
