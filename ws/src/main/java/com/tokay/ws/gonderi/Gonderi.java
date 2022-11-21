@@ -6,9 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+
+import com.tokay.ws.user.User;
 
 import lombok.Data;
 
@@ -25,4 +28,7 @@ public class Gonderi {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
+
+	@Lob
+	private User user;
 }

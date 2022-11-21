@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.tokay.ws.user.User;
+
 @Service
 public class GonderiService {
 
@@ -15,8 +17,9 @@ public class GonderiService {
 		this.gonderiRepository = gonderiRepository;
 	}
 
-	public void save(Gonderi gonderi) {
+	public void save(Gonderi gonderi, User user) {
 		gonderi.setTimestamp(new Date());
+		gonderi.setUser(user);
 		gonderiRepository.save(gonderi);
 
 	}
