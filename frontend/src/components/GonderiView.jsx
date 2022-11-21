@@ -1,11 +1,18 @@
 import React from "react";
-import ProfileImageWithDefault from './ProfileImageWithDefault';
-import { Link } from 'react-router-dom';
+import ProfileImageWithDefault from "./ProfileImageWithDefault";
+import { Link } from "react-router-dom";
+import { format } from "timeago.js";
+import { useTranslation } from "react-i18next";
 
 const GonderiView = (props) => {
   const { gonderi } = props;
-  const { user, content } = gonderi;
+  const { user, content, timestamp } = gonderi;
   const { username, displayName, image } = user;
+
+  const { i18n } = useTranslation();
+
+  const formatted = format(timestamp, i18n.language);
+
   return (
     <div className="card p-1">
       <div className="d-flex">
@@ -17,9 +24,11 @@ const GonderiView = (props) => {
         />
         <div className="flex-fill m-auto pl-2">
           <Link to={`/user/${username}`} className="text-dark">
-            <h6>
+            <h6 className="d-inline">
               {displayName}@{username}
             </h6>
+            <span> - </span>
+            <span>{formatted}</span>
           </Link>
         </div>
       </div>
