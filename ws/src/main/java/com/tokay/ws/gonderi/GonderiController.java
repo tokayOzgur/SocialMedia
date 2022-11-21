@@ -40,7 +40,7 @@ public class GonderiController {
 	@GetMapping("/users/{username}/gonderiler")
 	Page<GonderiVM> getUserGonderiler(@PathVariable String username,
 			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page) {
-		return gonderiService.getGonderiler(page).map(GonderiVM::new);
+		return gonderiService.getGonderilerOfUser(username, page).map(GonderiVM::new);
 	}
 
 }
