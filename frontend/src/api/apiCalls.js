@@ -41,3 +41,7 @@ export const getGonderiler = (username, page = 0) => {
   const path = username ? `/api/1.0/users/${username}/gonderiler?page=` : '/api/1.0/gonderiler?page=';
   return axios.get(path + page);
 }
+
+export const getOldGonderiler = (id) => {
+  return axios.get('/api/1.0/gonderiler/' + id)
+}

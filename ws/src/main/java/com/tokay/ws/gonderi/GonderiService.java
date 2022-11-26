@@ -35,4 +35,8 @@ public class GonderiService {
 	public Page<Gonderi> getGonderilerOfUser(String username, Pageable page) {
 		return gonderiRepository.findByUser(userService.getByUsername(username), page);
 	}
+
+	public Page<Gonderi> getOldGonderiler(long id, Pageable page) {
+		return gonderiRepository.findByIdLessThan(id, page);
+	}
 }

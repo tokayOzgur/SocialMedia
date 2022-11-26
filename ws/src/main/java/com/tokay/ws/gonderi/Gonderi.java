@@ -20,7 +20,7 @@ import lombok.Data;
 @Entity
 public class Gonderi {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	@Size(min = 1, max = 1000)

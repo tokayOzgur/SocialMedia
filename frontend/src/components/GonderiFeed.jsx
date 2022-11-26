@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getGonderiler } from "../api/apiCalls";
+import { getGonderiler, getOldGonderiler } from "../api/apiCalls";
 import { useTranslation } from "react-i18next";
 import GonderiView from "./GonderiView";
 import { useApiProgress } from "../shared/ApiProgress";
@@ -21,20 +21,29 @@ const GonderiFeed = () => {
   const pendingApiCall = useApiProgress("get", path);
 
   useEffect(() => {
+    const loadGonderiler = async (page) => {
+      try {
+        const response = await getGonderiler(username, page);
+        setGonderiPage((previousGonderiPage) => ({
+          ...response.data,
+          content: [...previousGonderiPage.content, ...response.data.content],
+        }));
+      } catch (error) {}
+    };
     loadGonderiler();
-  }, []);
+  }, [username]);
 
-  const loadGonderiler = async (page) => {
-    try {
-       const response = await getGonderiler(username, page);
-      setGonderiPage((previousGonderiPage) => ({
-        ...response.data,
-        content: [...previousGonderiPage.content, ...response.data.content],
-      }));
-    } catch (error) {}
+  const loadOldGonderiler = async () => {
+    const lastGonderiIndex = gonderiPage.content.length - 1;
+    const lastGonderiId = gonderiPage.content[lastGonderiIndex].id;
+    const response = await getOldGonderiler(lastGonderiId);
+    setGonderiPage((previousGonderiPage) => ({
+      ...response.data,
+      content: [...previousGonderiPage.content, ...response.data.content],
+    }));
   };
 
-  const { content, last, number } = gonderiPage;
+  const { content, last } = gonderiPage;
 
   if (content.length === 0) {
     return (
@@ -53,7 +62,7 @@ const GonderiFeed = () => {
         <div
           className="alert alert-secondary text-center"
           style={{ cursor: pendingApiCall ? "not-allowed" : "pointer" }}
-          onClick={pendingApiCall ? () => {} : () => loadGonderiler(number + 1)}
+          onClick={pendingApiCall ? () => {} : () => loadOldGonderiler()}
         >
           {pendingApiCall ? <Spinner /> : t("Load old posts")}
         </div>

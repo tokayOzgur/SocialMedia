@@ -10,4 +10,6 @@ public interface GonderiRepository extends JpaRepository<Gonderi, Long> {
 
 	Page<Gonderi> findByUser(User user, Pageable page);
 
+	Page<Gonderi> findByIdLessThan(long id, Pageable page);
+
 }
