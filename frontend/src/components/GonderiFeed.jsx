@@ -25,9 +25,12 @@ const GonderiFeed = () => {
     const lastGonderiIndex = gonderiPage.content.length - 1;
     lastGonderiId = gonderiPage.content[lastGonderiIndex].id;
   }
+  const oldGonderilerPath = username
+    ? `/api/1.0/users/${username}/gonderiler/${lastGonderiId}`
+    : `/api/1.0/gonderiler/${lastGonderiId}`;
   const loadOldGonderilerProgress = useApiProgress(
     "get",
-    "/api/1.0/gonderiler/" + lastGonderiId,
+    oldGonderilerPath,
     true
   );
 
@@ -45,9 +48,7 @@ const GonderiFeed = () => {
   }, [username]);
 
   const loadOldGonderiler = async () => {
-    const lastGonderiIndex = gonderiPage.content.length - 1;
-    const lastGonderiId = gonderiPage.content[lastGonderiIndex].id;
-    const response = await getOldGonderiler(lastGonderiId);
+    const response = await getOldGonderiler(lastGonderiId, username);
     setGonderiPage((previousGonderiPage) => ({
       ...response.data,
       content: [...previousGonderiPage.content, ...response.data.content],

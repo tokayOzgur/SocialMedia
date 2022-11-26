@@ -49,4 +49,10 @@ public class GonderiController {
 		return gonderiService.getGonderilerOfUser(username, page).map(GonderiVM::new);
 	}
 
+	@GetMapping("/users/{username}/gonderiler/{id:[0-9]+}")
+	Page<GonderiVM> getUserGonderilerRelative(@PathVariable long id, @PathVariable String username,
+			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page) {
+		return gonderiService.getOldGonderilerOfUser(id, username, page).map(GonderiVM::new);
+	}
+
 }

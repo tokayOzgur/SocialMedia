@@ -39,4 +39,8 @@ public class GonderiService {
 	public Page<Gonderi> getOldGonderiler(long id, Pageable page) {
 		return gonderiRepository.findByIdLessThan(id, page);
 	}
+
+	public Page<Gonderi> getOldGonderilerOfUser(long id, String username, Pageable page) {
+		return gonderiRepository.findByIdLessThanAndUser(id, userService.getByUsername(username), page);
+	}
 }
