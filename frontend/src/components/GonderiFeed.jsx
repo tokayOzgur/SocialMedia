@@ -18,7 +18,18 @@ const GonderiFeed = () => {
   const path = username
     ? `/api/1.0/users/${username}/gonderiler?page=`
     : "/api/1.0/gonderiler?page=";
-  const pendingApiCall = useApiProgress("get", path);
+  const initialGonderiLoadProgress = useApiProgress("get", path);
+
+  let lastGonderiId = 0;
+  if (gonderiPage.content.length > 0) {
+    const lastGonderiIndex = gonderiPage.content.length - 1;
+    lastGonderiId = gonderiPage.content[lastGonderiIndex].id;
+  }
+  const loadOldGonderilerProgress = useApiProgress(
+    "get",
+    "/api/1.0/gonderiler/" + lastGonderiId,
+    true
+  );
 
   useEffect(() => {
     const loadGonderiler = async (page) => {
@@ -48,7 +59,7 @@ const GonderiFeed = () => {
   if (content.length === 0) {
     return (
       <div className="alert alert-secondary text-center">
-        {pendingApiCall ? <Spinner /> : t("There are no posts")}
+        {initialGonderiLoadProgress ? <Spinner /> : t("There are no posts")}
       </div>
     );
   }
@@ -61,10 +72,14 @@ const GonderiFeed = () => {
       {!last && (
         <div
           className="alert alert-secondary text-center"
-          style={{ cursor: pendingApiCall ? "not-allowed" : "pointer" }}
-          onClick={pendingApiCall ? () => {} : () => loadOldGonderiler()}
+          style={{
+            cursor: loadOldGonderilerProgress ? "not-allowed" : "pointer",
+          }}
+          onClick={
+            loadOldGonderilerProgress ? () => {} : () => loadOldGonderiler()
+          }
         >
-          {pendingApiCall ? <Spinner /> : t("Load old posts")}
+          {loadOldGonderilerProgress ? <Spinner /> : t("Load old posts")}
         </div>
       )}
     </div>
