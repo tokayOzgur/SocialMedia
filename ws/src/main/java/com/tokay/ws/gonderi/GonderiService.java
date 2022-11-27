@@ -43,4 +43,8 @@ public class GonderiService {
 	public Page<Gonderi> getOldGonderilerOfUser(long id, String username, Pageable page) {
 		return gonderiRepository.findByIdLessThanAndUser(id, userService.getByUsername(username), page);
 	}
+
+	public long getNewGonderiCount(long id) {
+		return gonderiRepository.countByIdGreaterThan(id);
+	}
 }

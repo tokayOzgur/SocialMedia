@@ -28,7 +28,8 @@ i18n.use(initReactI18next).init({
                 Cancel: 'Cancel',
                 'My Profile': 'My Profile',
                 'There are no posts': 'There are no posts',
-                'Load old posts': 'Load old posts'
+                'Load old posts': 'Load old posts',
+                'There are new posts': 'There are new posts'
             }
         },
         tr: {
@@ -54,7 +55,8 @@ i18n.use(initReactI18next).init({
                 Cancel: 'İptal Et',
                 'My Profile': 'Hesabım',
                 'There are no posts': 'Gönderi bulunamadı',
-                'Load old posts': "Eski gönderileri yükle"
+                'Load old posts': "Eski gönderileri yükle",
+                "There are new posts": "Yeni gönderiler var"
             }
         }
     },

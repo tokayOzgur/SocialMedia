@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getGonderiler, getOldGonderiler } from "../api/apiCalls";
+import {
+  getGonderiler,
+  getOldGonderiler,
+  getNewGonderiCount,
+} from "../api/apiCalls";
 import { useTranslation } from "react-i18next";
 import GonderiView from "./GonderiView";
 import { useApiProgress } from "../shared/ApiProgress";
@@ -12,6 +16,7 @@ const GonderiFeed = () => {
     last: true,
     number: 0,
   });
+  const [newGonderiCount, setNewGonderiCount] = useState(0);
   const { t } = useTranslation();
   const { username } = useParams();
 
@@ -21,7 +26,10 @@ const GonderiFeed = () => {
   const initialGonderiLoadProgress = useApiProgress("get", path);
 
   let lastGonderiId = 0;
+  let firstGonderiId = 0;
   if (gonderiPage.content.length > 0) {
+    firstGonderiId = gonderiPage.content[0].id;
+
     const lastGonderiIndex = gonderiPage.content.length - 1;
     lastGonderiId = gonderiPage.content[lastGonderiIndex].id;
   }
@@ -33,7 +41,18 @@ const GonderiFeed = () => {
     oldGonderilerPath,
     true
   );
-
+  useEffect(() => {
+    const getCount = async () => {
+      const response = await getNewGonderiCount(firstGonderiId);
+      setNewGonderiCount(response.data.count);
+    };
+    let looper = setInterval(() => {
+      getCount();
+    }, 1000);
+    return function cleanup() {
+      clearInterval(looper);
+    };
+  }, [firstGonderiId]);
   useEffect(() => {
     const loadGonderiler = async (page) => {
       try {
@@ -67,6 +86,11 @@ const GonderiFeed = () => {
 
   return (
     <div>
+      {newGonderiCount > 0 && (
+        <div className="alert alert-secondary text-center mb-1">
+          {t("There are new hoaxes")}
+        </div>
+      )}
       {content.map((gonderi) => {
         return <GonderiView key={gonderi.id} gonderi={gonderi} />;
       })}
