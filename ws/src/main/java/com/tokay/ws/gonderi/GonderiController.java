@@ -1,7 +1,9 @@
 package com.tokay.ws.gonderi;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -45,12 +47,18 @@ public class GonderiController {
 	@GetMapping("/gonderiler/{id:[0-9]+}")
 	ResponseEntity<?> getGonderilerRealitve(
 			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page, @PathVariable long id,
-			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count) {
+			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count,
+			@RequestParam(name = "direction", defaultValue = "before") String direction) {
 		if (count) {
 			long newGonderiCount = gonderiService.getNewGonderiCount(id);
 			Map<String, Long> response = new HashMap<>();
 			response.put("count", newGonderiCount);
 			return ResponseEntity.ok(response);
+		}
+		if (direction.equals("after")) {
+			List<GonderiVM> newGonderiler = gonderiService.getNewGonderi(id, page.getSort()).stream()
+					.map(GonderiVM::new).collect(Collectors.toList());
+			return ResponseEntity.ok(newGonderiler);
 		}
 		return ResponseEntity.ok(gonderiService.getOldGonderiler(id, page).map(GonderiVM::new));
 	}

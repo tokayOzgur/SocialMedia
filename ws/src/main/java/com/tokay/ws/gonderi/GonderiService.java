@@ -1,9 +1,11 @@
 package com.tokay.ws.gonderi;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tokay.ws.user.User;
@@ -50,5 +52,9 @@ public class GonderiService {
 
 	public long getNewGonderiCountOfUser(long id, String username) {
 		return gonderiRepository.countByIdGreaterThanAndUser(id, userService.getByUsername(username));
+	}
+
+	public List<Gonderi> getNewGonderi(long id, Sort sort) {
+		return gonderiRepository.findByIdGreaterThan(id, sort);
 	}
 }

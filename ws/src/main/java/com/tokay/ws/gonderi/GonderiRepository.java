@@ -1,5 +1,8 @@
 package com.tokay.ws.gonderi;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +21,5 @@ public interface GonderiRepository extends JpaRepository<Gonderi, Long> {
 
 	long countByIdGreaterThanAndUser(long id, User user);
 
+	List<Gonderi> findByIdGreaterThan(long id, Sort sort);
 }
