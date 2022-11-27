@@ -3,6 +3,7 @@ import {
   getGonderiler,
   getOldGonderiler,
   getNewGonderiCount,
+  getNewGonderiler,
 } from "../api/apiCalls";
 import { useTranslation } from "react-i18next";
 import GonderiView from "./GonderiView";
@@ -33,22 +34,29 @@ const GonderiFeed = () => {
     const lastGonderiIndex = gonderiPage.content.length - 1;
     lastGonderiId = gonderiPage.content[lastGonderiIndex].id;
   }
+
   const oldGonderilerPath = username
     ? `/api/1.0/users/${username}/gonderiler/${lastGonderiId}`
     : `/api/1.0/gonderiler/${lastGonderiId}`;
+
   const loadOldGonderilerProgress = useApiProgress(
     "get",
     oldGonderilerPath,
     true
   );
+
+  const loadNewGonderilerProgress = useApiProgress(
+    "get",
+    `/api/1.0/gonderiler/${firstGonderiId}?direction=after`,
+    true
+  );
+
   useEffect(() => {
     const getCount = async () => {
       const response = await getNewGonderiCount(firstGonderiId, username);
       setNewGonderiCount(response.data.count);
     };
-    let looper = setInterval(() => {
-      getCount();
-    }, 1000);
+    let looper = setInterval(getCount, 1000);
     return function cleanup() {
       clearInterval(looper);
     };
@@ -74,6 +82,15 @@ const GonderiFeed = () => {
     }));
   };
 
+  const loadNewGonderiler = async () => {
+    const response = await getNewGonderiler(firstGonderiId);
+    setGonderiPage((previousGonderiPage) => ({
+      ...previousGonderiPage,
+      content: [...response.data, ...previousGonderiPage.content],
+    }));
+    setNewGonderiCount(0);
+  };
+
   const { content, last } = gonderiPage;
 
   if (content.length === 0) {
@@ -87,8 +104,14 @@ const GonderiFeed = () => {
   return (
     <div>
       {newGonderiCount > 0 && (
-        <div className="alert alert-secondary text-center mb-1">
-          {t("There are new hoaxes")}
+        <div
+          className="alert alert-secondary text-center mb-1"
+          style={{
+            cursor: loadNewGonderilerProgress ? "not-allowed" : "pointer",
+          }}
+          onClick={loadNewGonderilerProgress ? () => {} : loadNewGonderiler}
+        >
+          {loadNewGonderilerProgress ? <Spinner /> : t("There are new posts")}
         </div>
       )}
       {content.map((gonderi) => {
@@ -100,9 +123,7 @@ const GonderiFeed = () => {
           style={{
             cursor: loadOldGonderilerProgress ? "not-allowed" : "pointer",
           }}
-          onClick={
-            loadOldGonderilerProgress ? () => {} : () => loadOldGonderiler()
-          }
+          onClick={loadOldGonderilerProgress ? () => {} : loadOldGonderiler}
         >
           {loadOldGonderilerProgress ? <Spinner /> : t("Load old posts")}
         </div>
