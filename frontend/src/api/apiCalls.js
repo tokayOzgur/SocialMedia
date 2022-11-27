@@ -46,7 +46,7 @@ export const getOldGonderiler = (id, username) => {
   const path = username ? `/api/1.0/users/${username}/gonderiler/${id}` : `/api/1.0/gonderiler/${id}`;
   return axios.get(path);
 }
-
-export const getNewGonderiCount = id => {
-  return axios.get(`/api/1.0/gonderiler/${id}?count=true`);
+export const getNewGonderiCount = (id, username) => {
+  const path = username ? `/api/1.0/users/${username}/gonderiler/${id}?count=true` : `/api/1.0/gonderiler/${id}?count=true`;
+  return axios.get(path);
 };

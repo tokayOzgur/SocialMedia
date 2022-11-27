@@ -47,4 +47,8 @@ public class GonderiService {
 	public long getNewGonderiCount(long id) {
 		return gonderiRepository.countByIdGreaterThan(id);
 	}
+
+	public long getNewGonderiCountOfUser(long id, String username) {
+		return gonderiRepository.countByIdGreaterThanAndUser(id, userService.getByUsername(username));
+	}
 }

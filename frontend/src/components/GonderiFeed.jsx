@@ -43,7 +43,7 @@ const GonderiFeed = () => {
   );
   useEffect(() => {
     const getCount = async () => {
-      const response = await getNewGonderiCount(firstGonderiId);
+      const response = await getNewGonderiCount(firstGonderiId, username);
       setNewGonderiCount(response.data.count);
     };
     let looper = setInterval(() => {
@@ -52,7 +52,7 @@ const GonderiFeed = () => {
     return function cleanup() {
       clearInterval(looper);
     };
-  }, [firstGonderiId]);
+  }, [firstGonderiId, username]);
   useEffect(() => {
     const loadGonderiler = async (page) => {
       try {
