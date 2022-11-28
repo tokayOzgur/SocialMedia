@@ -72,12 +72,18 @@ public class GonderiController {
 	@GetMapping("/users/{username}/gonderiler/{id:[0-9]+}")
 	ResponseEntity<?> getUserGonderilerRelative(@PathVariable long id, @PathVariable String username,
 			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page,
-			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count) {
+			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count,
+			@RequestParam(name = "direction", defaultValue = "before") String direction) {
 		if (count) {
 			long newGonderiCount = gonderiService.getNewGonderiCount(id);
 			Map<String, Long> response = new HashMap<>();
 			response.put("count", newGonderiCount);
 			return ResponseEntity.ok(response);
+		}
+		if (direction.equals("after")) {
+			List<GonderiVM> newGonderiler = gonderiService.getNewGonderilerOfUser(id, username, page.getSort()).stream()
+					.map(GonderiVM::new).collect(Collectors.toList());
+			return ResponseEntity.ok(newGonderiler);
 		}
 		return ResponseEntity.ok(gonderiService.getOldGonderilerOfUser(id, username, page).map(GonderiVM::new));
 	}

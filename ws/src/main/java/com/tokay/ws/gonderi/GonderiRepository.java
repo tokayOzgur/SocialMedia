@@ -22,4 +22,6 @@ public interface GonderiRepository extends JpaRepository<Gonderi, Long> {
 	long countByIdGreaterThanAndUser(long id, User user);
 
 	List<Gonderi> findByIdGreaterThan(long id, Sort sort);
+
+	List<Gonderi> findByIdGreaterThanAndUser(long id, User user, Sort sort);
 }

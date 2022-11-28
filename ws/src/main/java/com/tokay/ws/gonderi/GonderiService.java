@@ -57,4 +57,8 @@ public class GonderiService {
 	public List<Gonderi> getNewGonderi(long id, Sort sort) {
 		return gonderiRepository.findByIdGreaterThan(id, sort);
 	}
+
+	public List<Gonderi> getNewGonderilerOfUser(long id, String username, Sort sort) {
+		return gonderiRepository.findByIdGreaterThanAndUser(id, userService.getByUsername(username), sort);
+	}
 }

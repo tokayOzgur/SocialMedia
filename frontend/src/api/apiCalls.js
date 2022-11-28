@@ -50,7 +50,7 @@ export const getNewGonderiCount = (id, username) => {
   const path = username ? `/api/1.0/users/${username}/gonderiler/${id}?count=true` : `/api/1.0/gonderiler/${id}?count=true`;
   return axios.get(path);
 };
-
-export const getNewGonderiler = id => {
-  return axios.get(`/api/1.0/gonderiler/${id}?direction=after`);
+export const getNewGonderiler = (id, username) => {
+  const path = username ? `/api/1.0/users/${username}/gonderiler/${id}?direction=after` : `/api/1.0/gonderiler/${id}?direction=after`;
+  return axios.get(path);
 };

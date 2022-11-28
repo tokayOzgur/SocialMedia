@@ -45,18 +45,18 @@ const GonderiFeed = () => {
     true
   );
 
-  const loadNewGonderilerProgress = useApiProgress(
-    "get",
-    `/api/1.0/gonderiler/${firstGonderiId}?direction=after`,
-    true
-  );
+  const newGonderiPath = username
+    ? `/api/1.0/users/${username}/gonderileri/${firstGonderiId}?direction=after`
+    : `/api/1.0/gonderiler/${firstGonderiId}?direction=after`;
+
+  const loadNewGonderilerProgress = useApiProgress("get", newGonderiPath, true);
 
   useEffect(() => {
     const getCount = async () => {
       const response = await getNewGonderiCount(firstGonderiId, username);
       setNewGonderiCount(response.data.count);
     };
-    let looper = setInterval(getCount, 1000);
+    let looper = setInterval(getCount, 5000);
     return function cleanup() {
       clearInterval(looper);
     };
@@ -83,7 +83,7 @@ const GonderiFeed = () => {
   };
 
   const loadNewGonderiler = async () => {
-    const response = await getNewGonderiler(firstGonderiId);
+    const response = await getNewGonderiler(firstGonderiId, username);
     setGonderiPage((previousGonderiPage) => ({
       ...previousGonderiPage,
       content: [...response.data, ...previousGonderiPage.content],
