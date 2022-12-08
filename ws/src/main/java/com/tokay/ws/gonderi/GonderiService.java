@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.tokay.ws.user.User;
@@ -27,7 +28,6 @@ public class GonderiService {
 		gonderi.setTimestamp(new Date());
 		gonderi.setUser(user);
 		gonderiRepository.save(gonderi);
-
 	}
 
 	public Page<Gonderi> getGonderiler(Pageable page) {
@@ -38,27 +38,40 @@ public class GonderiService {
 		return gonderiRepository.findByUser(userService.getByUsername(username), page);
 	}
 
-	public Page<Gonderi> getOldGonderiler(long id, Pageable page) {
-		return gonderiRepository.findByIdLessThan(id, page);
+	public Page<Gonderi> getOldGonderiler(long id, String username, Pageable page) {
+		Specification<Gonderi> specification = idLessThan(id);
+		if (username != null) {
+			specification = specification.and(userIs(userService.getByUsername(username)));
+		}
+		return gonderiRepository.findAll(specification, page);
 	}
 
-	public Page<Gonderi> getOldGonderilerOfUser(long id, String username, Pageable page) {
-		return gonderiRepository.findByIdLessThanAndUser(id, userService.getByUsername(username), page);
+	public long getNewGonderiCount(long id, String username) {
+		Specification<Gonderi> specification = idGreaterThan(id);
+		if (username != null) {
+			specification = specification.and(userIs(userService.getByUsername(username)));
+		}
+		return gonderiRepository.count(specification);
 	}
 
-	public long getNewGonderiCount(long id) {
-		return gonderiRepository.countByIdGreaterThan(id);
+	public List<Gonderi> getNewGonderiler(long id, String username, Sort sort) {
+		Specification<Gonderi> specification = idGreaterThan(id);
+		if (username != null) {
+			specification = specification.and(userIs(userService.getByUsername(username)));
+		}
+		return gonderiRepository.findAll(specification, sort);
 	}
 
-	public long getNewGonderiCountOfUser(long id, String username) {
-		return gonderiRepository.countByIdGreaterThanAndUser(id, userService.getByUsername(username));
+	Specification<Gonderi> idLessThan(long id) {
+		return (root, query, criteriaBuilder) -> criteriaBuilder.lessThan(root.get("id"), id);
 	}
 
-	public List<Gonderi> getNewGonderi(long id, Sort sort) {
-		return gonderiRepository.findByIdGreaterThan(id, sort);
+	Specification<Gonderi> userIs(User user) {
+		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("user"), user);
 	}
 
-	public List<Gonderi> getNewGonderilerOfUser(long id, String username, Sort sort) {
-		return gonderiRepository.findByIdGreaterThanAndUser(id, userService.getByUsername(username), sort);
+	Specification<Gonderi> idGreaterThan(long id) {
+		return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("id"), id);
 	}
+
 }

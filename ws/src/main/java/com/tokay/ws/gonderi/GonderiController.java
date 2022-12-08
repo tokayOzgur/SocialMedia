@@ -44,23 +44,24 @@ public class GonderiController {
 		return gonderiService.getGonderiler(page).map(GonderiVM::new);
 	}
 
-	@GetMapping("/gonderiler/{id:[0-9]+}")
+	@GetMapping({ "/gonderiler/{id:[0-9]+}", "/users/{username}/gonderiler/{id:[0-9]+}" })
 	ResponseEntity<?> getGonderilerRealitve(
 			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page, @PathVariable long id,
+			@PathVariable(required = false) String username,
 			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count,
 			@RequestParam(name = "direction", defaultValue = "before") String direction) {
 		if (count) {
-			long newGonderiCount = gonderiService.getNewGonderiCount(id);
+			long newGonderiCount = gonderiService.getNewGonderiCount(id, username);
 			Map<String, Long> response = new HashMap<>();
 			response.put("count", newGonderiCount);
 			return ResponseEntity.ok(response);
 		}
 		if (direction.equals("after")) {
-			List<GonderiVM> newGonderiler = gonderiService.getNewGonderi(id, page.getSort()).stream()
+			List<GonderiVM> newGonderiler = gonderiService.getNewGonderiler(id, username, page.getSort()).stream()
 					.map(GonderiVM::new).collect(Collectors.toList());
 			return ResponseEntity.ok(newGonderiler);
 		}
-		return ResponseEntity.ok(gonderiService.getOldGonderiler(id, page).map(GonderiVM::new));
+		return ResponseEntity.ok(gonderiService.getOldGonderiler(id, username, page).map(GonderiVM::new));
 	}
 
 	@GetMapping("/users/{username}/gonderiler")
@@ -69,23 +70,23 @@ public class GonderiController {
 		return gonderiService.getGonderilerOfUser(username, page).map(GonderiVM::new);
 	}
 
-	@GetMapping("/users/{username}/gonderiler/{id:[0-9]+}")
-	ResponseEntity<?> getUserGonderilerRelative(@PathVariable long id, @PathVariable String username,
-			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page,
-			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count,
-			@RequestParam(name = "direction", defaultValue = "before") String direction) {
-		if (count) {
-			long newGonderiCount = gonderiService.getNewGonderiCount(id);
-			Map<String, Long> response = new HashMap<>();
-			response.put("count", newGonderiCount);
-			return ResponseEntity.ok(response);
-		}
-		if (direction.equals("after")) {
-			List<GonderiVM> newGonderiler = gonderiService.getNewGonderilerOfUser(id, username, page.getSort()).stream()
-					.map(GonderiVM::new).collect(Collectors.toList());
-			return ResponseEntity.ok(newGonderiler);
-		}
-		return ResponseEntity.ok(gonderiService.getOldGonderilerOfUser(id, username, page).map(GonderiVM::new));
-	}
+//	@GetMapping()
+//	ResponseEntity<?> getUserGonderilerRelative(@PathVariable long id, @PathVariable String username,
+//			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page,
+//			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count,
+//			@RequestParam(name = "direction", defaultValue = "before") String direction) {
+//		if (count) {
+//			long newGonderiCount = gonderiService.getNewGonderiCount(id);
+//			Map<String, Long> response = new HashMap<>();
+//			response.put("count", newGonderiCount);
+//			return ResponseEntity.ok(response);
+//		}
+//		if (direction.equals("after")) {
+//			List<GonderiVM> newGonderiler = gonderiService.getNewGonderilerOfUser(id, username, page.getSort()).stream()
+//					.map(GonderiVM::new).collect(Collectors.toList());
+//			return ResponseEntity.ok(newGonderiler);
+//		}
+//		return ResponseEntity.ok(gonderiService.getOldGonderilerOfUser(id, username, page).map(GonderiVM::new));
+//	}
 
 }
