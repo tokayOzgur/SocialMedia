@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.apache.tika.Tika;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tokay.ws.configuration.AppConfiguration;
 
@@ -53,5 +54,19 @@ public class FileService {
 	public String detectType(String value) {
 		byte[] base64encoded = Base64.getDecoder().decode(value);
 		return tika.detect(base64encoded);
+	}
+
+	public String saveGonderiAtachment(MultipartFile multipartFile) {
+		String fileName = generateRandomName();
+		File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
+		OutputStream os;
+		try {
+			os = new FileOutputStream(target);
+			os.write(multipartFile.getBytes());
+			os.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return fileName;
 	}
 }

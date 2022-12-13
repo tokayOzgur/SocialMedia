@@ -46,11 +46,17 @@ export const getOldGonderiler = (id, username) => {
   const path = username ? `/api/1.0/users/${username}/gonderiler/${id}` : `/api/1.0/gonderiler/${id}`;
   return axios.get(path);
 }
+
 export const getNewGonderiCount = (id, username) => {
   const path = username ? `/api/1.0/users/${username}/gonderiler/${id}?count=true` : `/api/1.0/gonderiler/${id}?count=true`;
   return axios.get(path);
 };
+
 export const getNewGonderiler = (id, username) => {
   const path = username ? `/api/1.0/users/${username}/gonderiler/${id}?direction=after` : `/api/1.0/gonderiler/${id}?direction=after`;
   return axios.get(path);
+};
+
+export const postGonderiAttachment = attachment => {
+  return axios.post('/api/1.0/gonderi-attachments', attachment);
 };
