@@ -6,10 +6,16 @@ import { postGonderi, postGonderiAttachment } from "../api/apiCalls";
 import { useApiProgress } from "../shared/ApiProgress";
 import ButtonWithProgress from "./ButtonWithProgress";
 import Input from "./Input";
+import AutoUploadImage from "./AutoUploadImage";
 
 const GonderiSubmit = () => {
   const { image } = useSelector((store) => ({ image: store.image }));
-  const pendingApiCall = useApiProgress("post", "/api/1.0/gonderi");
+  const pendingApiCall = useApiProgress("post", "/api/1.0/gonderi", true);
+  const pendingFileUpload = useApiProgress(
+    "post",
+    "/api/1.0/gonderi-atachments",
+    true
+  );
 
   const [focused, setFocused] = useState(false);
   const [gonderi, setGonderi] = useState("");
@@ -93,24 +99,23 @@ const GonderiSubmit = () => {
                   onClick={onClickGonderi}
                   text="Paylaş"
                   pendingApiCall={pendingApiCall}
-                  disabled={pendingApiCall}
+                  disabled={pendingApiCall || pendingFileUpload}
                 />
                 <button
                   className="btn btn-light d-inline-flex m-2  border"
                   onClick={() => setFocused(false)}
-                  disabled={pendingApiCall}
+                  disabled={pendingApiCall || pendingFileUpload}
                 >
                   <i className="material-icons">close</i>
                   {t("Cancel")}
                 </button>
               </div>
 
-              <Input type="file" onChange={onChangeFile} />
+              {!newImage && <Input type="file" onChange={onChangeFile} />}
               {newImage && (
-                <img
-                  className="img-thumbnail w-25"
-                  src={newImage}
-                  alt="posts-attachment"
+                <AutoUploadImage
+                  image={newImage}
+                  uploading={pendingFileUpload}
                 />
               )}
             </>
