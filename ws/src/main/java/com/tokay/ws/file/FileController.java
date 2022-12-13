@@ -1,8 +1,5 @@
 package com.tokay.ws.file;
 
-import java.util.Collections;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +11,9 @@ public class FileController {
 	@Autowired
 	FileService fileService;
 
-	@PostMapping("api/1.0/gonderi-atachments")
-	Map<String, String> saveGonderiAtachment(MultipartFile file) {
-		return Collections.singletonMap("name", fileService.saveGonderiAtachment(file));
+	@PostMapping("api/1.0/gonderi-attachments")
+	FileAttachment saveGonderiAtachment(MultipartFile file) {
+		return fileService.saveGonderiAtachment(file);
 	}
 
 }

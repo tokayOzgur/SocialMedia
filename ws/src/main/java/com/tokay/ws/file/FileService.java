@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Date;
 import java.util.UUID;
 
 import org.apache.tika.Tika;
@@ -19,11 +20,13 @@ import com.tokay.ws.configuration.AppConfiguration;
 public class FileService {
 	AppConfiguration appConfiguration;
 	Tika tika;
+	FileAttachmentRepository repo;
 
-	public FileService(AppConfiguration appConfiguration) {
+	public FileService(AppConfiguration appConfiguration, FileAttachmentRepository repo) {
 		super();
 		this.appConfiguration = appConfiguration;
 		this.tika = new Tika();
+		this.repo = repo;
 	}
 
 	public String writeBase64EncodeStringToFile(String image) throws IOException {
@@ -56,7 +59,7 @@ public class FileService {
 		return tika.detect(base64encoded);
 	}
 
-	public String saveGonderiAtachment(MultipartFile multipartFile) {
+	public FileAttachment saveGonderiAtachment(MultipartFile multipartFile) {
 		String fileName = generateRandomName();
 		File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
 		OutputStream os;
@@ -67,6 +70,9 @@ public class FileService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return fileName;
+		FileAttachment attachment = new FileAttachment();
+		attachment.setName(fileName);
+		attachment.setDate(new Date());
+		return repo.save(attachment);
 	}
 }
