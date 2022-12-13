@@ -26,14 +26,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.headers().frameOptions().disable();// h2 db reject connect localhost fix
+		http.headers().frameOptions().disable();
 
 		http.httpBasic().authenticationEntryPoint(new AuthEntryPoint());
 
 		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/1.0/auth").authenticated()
 				.antMatchers(HttpMethod.PUT, "/api/1.0/users/{username}").authenticated()
-				.antMatchers(HttpMethod.POST, "/api/1.0/gonderiler").authenticated().and().authorizeRequests()
-				.anyRequest().permitAll();
+				.antMatchers(HttpMethod.POST, "/api/1.0/gonderiler").authenticated()
+				.antMatchers(HttpMethod.POST, "/api/1.0/gonderi-attachments").authenticated()
+				.and().authorizeRequests().anyRequest().permitAll();
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
