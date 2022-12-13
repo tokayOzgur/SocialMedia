@@ -58,7 +58,7 @@ public class UserService {
 			try {
 				String storedFileName = fileService.writeBase64EncodeStringToFile(updatedUser.getImage());
 				inDB.setImage(storedFileName);
-				fileService.deleteOldImage(oldImageName);
+				fileService.deleteFile(oldImageName);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
