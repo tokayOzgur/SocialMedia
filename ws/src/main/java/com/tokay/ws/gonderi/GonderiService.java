@@ -2,6 +2,7 @@ package com.tokay.ws.gonderi;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.tokay.ws.file.FileAttachment;
+import com.tokay.ws.file.FileAttachmentRepository;
+import com.tokay.ws.gonderi.vm.GonderiSubmitVM;
 import com.tokay.ws.user.User;
 import com.tokay.ws.user.UserService;
 
@@ -19,15 +23,29 @@ public class GonderiService {
 
 	UserService userService;
 
-	public GonderiService(GonderiRepository gonderiRepository, UserService userService) {
+	FileAttachmentRepository fileAttachmentRepository;
+
+	public GonderiService(GonderiRepository gonderiRepository, UserService userService,
+			FileAttachmentRepository fileAttachmentRepository) {
 		this.gonderiRepository = gonderiRepository;
 		this.userService = userService;
+		this.fileAttachmentRepository = fileAttachmentRepository;
 	}
 
-	public void save(Gonderi gonderi, User user) {
+	public void save(GonderiSubmitVM gonderiSubmitVM, User user) {
+		Gonderi gonderi = new Gonderi();
+		gonderi.setContent(gonderiSubmitVM.getContent());
 		gonderi.setTimestamp(new Date());
 		gonderi.setUser(user);
 		gonderiRepository.save(gonderi);
+		Optional<FileAttachment> optionalFileAttachment = fileAttachmentRepository
+				.findById(gonderiSubmitVM.getAttachmentId());
+		if (optionalFileAttachment.isPresent()) {
+			FileAttachment fileAttachment = optionalFileAttachment.get();
+			fileAttachment.setGonderi(gonderi);
+			fileAttachmentRepository.save(fileAttachment);
+		}
+
 	}
 
 	public Page<Gonderi> getGonderiler(Pageable page) {

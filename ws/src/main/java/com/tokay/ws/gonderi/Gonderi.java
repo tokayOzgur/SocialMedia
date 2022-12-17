@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 import com.tokay.ws.user.User;
 
@@ -23,7 +22,6 @@ public class Gonderi {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Size(min = 1, max = 1000)
 	@Column(length = 1000)
 	private String content;
 

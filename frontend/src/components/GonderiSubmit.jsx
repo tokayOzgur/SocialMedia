@@ -13,13 +13,14 @@ const GonderiSubmit = () => {
   const pendingApiCall = useApiProgress("post", "/api/1.0/gonderi", true);
   const pendingFileUpload = useApiProgress(
     "post",
-    "/api/1.0/gonderi-atachments",
+    "/api/1.0/gonderi-attachments",
     true
   );
 
   const [focused, setFocused] = useState(false);
   const [gonderi, setGonderi] = useState("");
   const [newImage, setNewImage] = useState();
+  const [attachmentId, setAttachmentId] = useState();
   const { t } = useTranslation();
   const [errors, setErrors] = useState({});
 
@@ -38,6 +39,7 @@ const GonderiSubmit = () => {
   const onClickGonderi = async () => {
     const body = {
       content: gonderi,
+      attachmentId: attachmentId,
     };
 
     try {
@@ -66,7 +68,8 @@ const GonderiSubmit = () => {
   const uploadFile = async (file) => {
     const attachment = new FormData();
     attachment.append("file", file);
-    await postGonderiAttachment(attachment);
+    const response = await postGonderiAttachment(attachment);
+    setAttachmentId(response.data.id);
   };
 
   let textAreaClass = "form-control ";
