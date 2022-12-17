@@ -29,6 +29,7 @@ const GonderiSubmit = () => {
       setGonderi("");
       setErrors({});
       setNewImage();
+      setAttachmentId();
     }
   }, [focused]);
 
