@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const GonderiView = (props) => {
   const { gonderi } = props;
-  const { user, content, timestamp } = gonderi;
+  const { user, content, timestamp, fileAttachment } = gonderi;
   const { username, displayName, image } = user;
 
   const { i18n } = useTranslation();
@@ -33,6 +33,15 @@ const GonderiView = (props) => {
         </div>
       </div>
       <div className="pl-5">{content}</div>
+      {fileAttachment && (
+        <div className="pl-5 text-center">
+          <img
+            className="img-fluid"
+            src={"images/" + fileAttachment.name}
+            alt={content}
+          />
+        </div>
+      )}
     </div>
   );
 };
