@@ -53,12 +53,11 @@ public class UserService {
 		User inDB = getByUsername(username);
 		inDB.setDisplayName(updatedUser.getDisplayName());
 		if (updatedUser.getImage() != null) {
-//			inDB.setImage(updatedUser.getImage());
 			String oldImageName = inDB.getImage();
 			try {
 				String storedFileName = fileService.writeBase64EncodeStringToFile(updatedUser.getImage());
 				inDB.setImage(storedFileName);
-				fileService.deleteFile(oldImageName);
+				fileService.deleteProfileImage(oldImageName);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -12,4 +12,15 @@ public class AppConfiguration {
 
 	private String uploadPath;
 
+	private String profileStroge = "profile";
+
+	private String attachmentStorage = "attachments";
+
+	public String getProfileStoragePath() {
+		return uploadPath + "/" + profileStroge;
+	}
+
+	public String getAttachmentStoragePath() {
+		return uploadPath + "/" + attachmentStorage;
+	}
 }

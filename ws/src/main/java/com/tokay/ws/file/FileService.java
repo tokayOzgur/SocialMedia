@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Date;
@@ -36,9 +37,11 @@ public class FileService {
 
 	public String writeBase64EncodeStringToFile(String image) throws IOException {
 		String fileName = generateRandomName();
-		File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
-		byte[] base64encoded = Base64.getDecoder().decode(image);
+		File target = new File(appConfiguration.getProfileStoragePath() + "/" + fileName);
 		OutputStream os = new FileOutputStream(target);
+
+		byte[] base64encoded = Base64.getDecoder().decode(image);
+
 		os.write(base64encoded);
 		os.close();
 		return fileName;
@@ -48,17 +51,32 @@ public class FileService {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 
-	public void deleteFile(String oldImageName) {
+	public void deleteProfileImage(String oldImageName) {
 		if (oldImageName == null) {
 			return;
 		}
+		deleteFile(Paths.get(appConfiguration.getProfileStoragePath(), oldImageName));
+	}
+
+	public void deleteAttachmentFile(String oldImageName) {
+		if (oldImageName == null) {
+			return;
+		}
+		deleteFile(Paths.get(appConfiguration.getAttachmentStoragePath(), oldImageName));
+	}
+
+	private void deleteFile(Path path) {
 		try {
-			Files.deleteIfExists(Paths.get(appConfiguration.getUploadPath(), oldImageName));
+			Files.deleteIfExists(path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public String detectType(byte[] arr) {
+		return tika.detect(arr);
+	}
+	
 	public String detectType(String value) {
 		byte[] base64encoded = Base64.getDecoder().decode(value);
 		return tika.detect(base64encoded);
@@ -66,17 +84,21 @@ public class FileService {
 
 	public FileAttachment saveGonderiAtachment(MultipartFile multipartFile) {
 		String fileName = generateRandomName();
-		File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
+		File target = new File(appConfiguration.getAttachmentStoragePath() + "/" + fileName);
 		OutputStream os;
+		String fileType = null;
 		try {
+			byte[] arr = multipartFile.getBytes();
 			os = new FileOutputStream(target);
-			os.write(multipartFile.getBytes());
+			os.write(arr);
 			os.close();
+			fileType = detectType(arr);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		FileAttachment attachment = new FileAttachment();
 		attachment.setName(fileName);
+		attachment.setName(fileType);
 		attachment.setDate(new Date());
 		return repo.save(attachment);
 	}
@@ -86,7 +108,7 @@ public class FileService {
 		Date twentyFourHoursAgo = new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000));
 		List<FileAttachment> filesToBeDeleted = repo.findByDateBeforeAndGonderiIsNull(twentyFourHoursAgo);
 		for (FileAttachment file : filesToBeDeleted) {
-			deleteFile(file.getName());
+			deleteAttachmentFile(file.getName());
 			repo.deleteById(file.getId());
 		}
 
