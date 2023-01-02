@@ -92,4 +92,8 @@ public class GonderiService {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("id"), id);
 	}
 
+	public void delete(long id) {
+		gonderiRepository.deleteById(id);
+	}
+
 }
