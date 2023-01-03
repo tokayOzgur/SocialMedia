@@ -4,14 +4,20 @@ import { Link } from "react-router-dom";
 import { format } from "timeago.js";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { deleteGonderi } from '../api/apiCalls';
 
 const GonderiView = (props) => {
   const loggedInUser = useSelector((store) => store.username);
-  const { gonderi } = props;
-  const { user, content, timestamp, fileAttachment } = gonderi;
+  const { gonderi, onDeleteGonderi } = props;
+  const { user, content, timestamp, fileAttachment, id } = gonderi;
   const { username, displayName, image } = user;
+  
 
   const { i18n } = useTranslation();
+  const onClickDelete = async () => {
+    await deleteGonderi(id);
+    onDeleteGonderi(id);
+  };
 
   const formatted = format(timestamp, i18n.language);
 
@@ -36,7 +42,7 @@ const GonderiView = (props) => {
           </Link>
         </div>
         {ownedByLoggedInUser && (
-          <button className="btn btn-delete-link btn-sm">
+          <button className="btn btn-delete-link btn-sm" onClick={onClickDelete}>
             <i className="material-icons">delete_outline</i>
           </button>
         )}

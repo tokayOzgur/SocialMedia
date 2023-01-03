@@ -91,6 +91,15 @@ const GonderiFeed = () => {
     setNewGonderiCount(0);
   };
 
+  const onDeleteGonderiSuccess = (id) => {
+    setGonderiPage((previousGonderiPage) => ({
+      ...previousGonderiPage,
+      content: previousGonderiPage.content.filter(
+        (gonderi) => gonderi.id !== id
+      ),
+    }));
+  };
+
   const { content, last } = gonderiPage;
 
   if (content.length === 0) {
@@ -115,7 +124,7 @@ const GonderiFeed = () => {
         </div>
       )}
       {content.map((gonderi) => {
-        return <GonderiView key={gonderi.id} gonderi={gonderi} />;
+        return <GonderiView key={gonderi.id} gonderi={gonderi} onDeleteGonderi={onDeleteGonderiSuccess} />;
       })}
       {!last && (
         <div

@@ -60,3 +60,7 @@ export const getNewGonderiler = (id, username) => {
 export const postGonderiAttachment = attachment => {
   return axios.post('/api/1.0/gonderi-attachments', attachment);
 };
+
+export const deleteGonderi = id => {
+  return axios.delete(`/api/1.0/gonderiler/${id}`);
+};
