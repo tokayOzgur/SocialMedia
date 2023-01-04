@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,28 +74,10 @@ public class GonderiController {
 	}
 	
 	@DeleteMapping("/gonderiler/{id:[0-9+]}")
+	@PreAuthorize("@gonderiSecurity.isAllowedToDelete(#id, principal)")
 	GenericResponse deleteGonderi(@PathVariable long id) {
 		gonderiService.delete(id);
 		return new GenericResponse("Gonderi removed");
 	}
-
-//	@GetMapping()
-//	ResponseEntity<?> getUserGonderilerRelative(@PathVariable long id, @PathVariable String username,
-//			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page,
-//			@RequestParam(name = "count", required = false, defaultValue = "false") boolean count,
-//			@RequestParam(name = "direction", defaultValue = "before") String direction) {
-//		if (count) {
-//			long newGonderiCount = gonderiService.getNewGonderiCount(id);
-//			Map<String, Long> response = new HashMap<>();
-//			response.put("count", newGonderiCount);
-//			return ResponseEntity.ok(response);
-//		}
-//		if (direction.equals("after")) {
-//			List<GonderiVM> newGonderiler = gonderiService.getNewGonderilerOfUser(id, username, page.getSort()).stream()
-//					.map(GonderiVM::new).collect(Collectors.toList());
-//			return ResponseEntity.ok(newGonderiler);
-//		}
-//		return ResponseEntity.ok(gonderiService.getOldGonderilerOfUser(id, username, page).map(GonderiVM::new));
-//	}
 
 }
