@@ -29,7 +29,9 @@ i18n.use(initReactI18next).init({
                 'My Profile': 'My Profile',
                 'There are no posts': 'There are no posts',
                 'Load old posts': 'Load old posts',
-                'There are new posts': 'There are new posts'
+                'There are new posts': 'There are new posts',
+                'Delete Post': 'Delete Post',
+                'Are you sure to delete Post?': 'Are you sure to delete Post?'
             }
         },
         tr: {
@@ -56,7 +58,9 @@ i18n.use(initReactI18next).init({
                 'My Profile': 'Hesabım',
                 'There are no posts': 'Gönderi bulunamadı',
                 'Load old posts': "Eski gönderileri yükle",
-                "There are new posts": "Yeni gönderiler var"
+                "There are new posts": "Yeni gönderiler var",
+                'Delete Post': `Gönderiyi sil`,
+                'Are you sure to delete post?': `Gönderiyi silmek istedğinizden emin misiniz?`
             }
         }
     },
