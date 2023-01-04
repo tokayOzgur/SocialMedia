@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.tokay.ws.user.User;
 
+/**
+ * @author tokay
+ *
+ */
+
 @Service(value = "gonderiSecurity")
 public class GonderiSecurityService {
 

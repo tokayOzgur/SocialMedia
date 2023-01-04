@@ -29,6 +29,11 @@ import com.tokay.ws.shared.CurrentUser;
 import com.tokay.ws.shared.GenericResponse;
 import com.tokay.ws.user.User;
 
+/**
+ * @author tokay
+ *
+ */
+
 @RestController
 @RequestMapping("/api/1.0")
 public class GonderiController {
@@ -72,7 +77,7 @@ public class GonderiController {
 			@PageableDefault(sort = "timestamp", direction = Direction.DESC) Pageable page) {
 		return gonderiService.getGonderilerOfUser(username, page).map(GonderiVM::new);
 	}
-	
+
 	@DeleteMapping("/gonderiler/{id:[0-9+]}")
 	@PreAuthorize("@gonderiSecurity.isAllowedToDelete(#id, principal)")
 	GenericResponse deleteGonderi(@PathVariable long id) {

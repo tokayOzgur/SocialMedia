@@ -2,6 +2,7 @@ package com.tokay.ws.gonderi;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,11 @@ import com.tokay.ws.file.FileAttachment;
 import com.tokay.ws.user.User;
 
 import lombok.Data;
+
+/**
+ * @author tokay
+ *
+ */
 
 @Data
 @Entity
@@ -33,6 +39,6 @@ public class Gonderi {
 	@ManyToOne
 	private User user;
 
-	@OneToOne(mappedBy = "gonderi")
+	@OneToOne(mappedBy = "gonderi", cascade = CascadeType.REMOVE)
 	private FileAttachment fileAttachment;
 }

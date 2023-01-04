@@ -20,14 +20,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
+/**
+ * @author tokay
+ */
+
 @Data
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8550603168502571274L;
 
 	@Id

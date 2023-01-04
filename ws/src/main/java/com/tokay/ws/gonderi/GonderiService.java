@@ -12,9 +12,15 @@ import org.springframework.stereotype.Service;
 
 import com.tokay.ws.file.FileAttachment;
 import com.tokay.ws.file.FileAttachmentRepository;
+import com.tokay.ws.file.FileService;
 import com.tokay.ws.gonderi.vm.GonderiSubmitVM;
 import com.tokay.ws.user.User;
 import com.tokay.ws.user.UserService;
+
+/**
+ * @author tokay
+ *
+ */
 
 @Service
 public class GonderiService {
@@ -25,11 +31,14 @@ public class GonderiService {
 
 	FileAttachmentRepository fileAttachmentRepository;
 
+	FileService fileService;
+
 	public GonderiService(GonderiRepository gonderiRepository, UserService userService,
-			FileAttachmentRepository fileAttachmentRepository) {
+			FileAttachmentRepository fileAttachmentRepository, FileService fileService) {
 		this.gonderiRepository = gonderiRepository;
 		this.userService = userService;
 		this.fileAttachmentRepository = fileAttachmentRepository;
+		this.fileService = fileService;
 	}
 
 	public void save(GonderiSubmitVM gonderiSubmitVM, User user) {
@@ -93,6 +102,10 @@ public class GonderiService {
 	}
 
 	public void delete(long id) {
+		Gonderi inDB = gonderiRepository.getOne(id);
+		if (inDB.getFileAttachment() != null) {
+			fileService.deleteAttachmentFile(inDB.getFileAttachment().getName());
+		}
 		gonderiRepository.deleteById(id);
 	}
 
