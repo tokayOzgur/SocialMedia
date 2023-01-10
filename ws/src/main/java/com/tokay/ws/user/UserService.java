@@ -2,6 +2,7 @@ package com.tokay.ws.user;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.tokay.ws.error.NotFoundException;
 import com.tokay.ws.file.FileService;
+import com.tokay.ws.gonderi.GonderiService;
 import com.tokay.ws.user.vm.UserUpdateVM;
 
 /**
@@ -24,10 +26,17 @@ public class UserService {
 
 	FileService fileService;
 
+	GonderiService gonderiService;
+
 	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, FileService fileService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.fileService = fileService;
+	}
+
+	@Autowired
+	public void setGonderiService(GonderiService gonderiService) {
+		this.gonderiService = gonderiService;
 	}
 
 	public void addUser(User entity) {
@@ -63,5 +72,10 @@ public class UserService {
 			}
 		}
 		return userRepository.save(inDB);
+	}
+
+	public void deleteUser(String username) {
+		gonderiService.deleteGonderilerOfUser(username);
+		userRepository.delete(userRepository.findByUsername(username));
 	}
 }

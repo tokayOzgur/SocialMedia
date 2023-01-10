@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,12 +34,16 @@ public class GonderiService {
 
 	FileService fileService;
 
-	public GonderiService(GonderiRepository gonderiRepository, UserService userService,
-			FileAttachmentRepository fileAttachmentRepository, FileService fileService) {
+	public GonderiService(GonderiRepository gonderiRepository, FileAttachmentRepository fileAttachmentRepository,
+			FileService fileService) {
 		this.gonderiRepository = gonderiRepository;
-		this.userService = userService;
 		this.fileAttachmentRepository = fileAttachmentRepository;
 		this.fileService = fileService;
+		
+	}
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	public void save(GonderiSubmitVM gonderiSubmitVM, User user) {
@@ -107,6 +112,13 @@ public class GonderiService {
 			fileService.deleteAttachmentFile(inDB.getFileAttachment().getName());
 		}
 		gonderiRepository.deleteById(id);
+	}
+
+	public void deleteGonderilerOfUser(String username) {
+		User inDb = userService.getByUsername(username);
+		Specification<Gonderi> userOwned = userIs(inDb);
+		List<Gonderi> gonderiToBeRemoved = gonderiRepository.findAll(userOwned);
+		gonderiRepository.deleteAll(gonderiToBeRemoved);
 	}
 
 }
