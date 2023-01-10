@@ -64,3 +64,7 @@ export const postGonderiAttachment = attachment => {
 export const deleteGonderi = id => {
   return axios.delete(`/api/1.0/gonderiler/${id}`);
 };
+
+export const deleteUser = username => {
+  return axios.delete(`/api/1.0/users/${username}`);
+};

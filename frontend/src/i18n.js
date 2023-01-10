@@ -31,7 +31,9 @@ i18n.use(initReactI18next).init({
                 'Load old posts': 'Load old posts',
                 'There are new posts': 'There are new posts',
                 'Delete Post': 'Delete Post',
-                'Are you sure to delete Post?': 'Are you sure to delete Post?'
+                'Are you sure to delete Post?': 'Are you sure to delete Post?',
+                'Delete My Account': 'Delete My Account',
+                'Are you sure to delete your account?': 'Are you sure to delete your account?'
             }
         },
         tr: {
@@ -60,7 +62,9 @@ i18n.use(initReactI18next).init({
                 'Load old posts': "Eski gönderileri yükle",
                 "There are new posts": "Yeni gönderiler var",
                 'Delete Post': `Gönderiyi sil`,
-                'Are you sure to delete post?': `Gönderiyi silmek istedğinizden emin misiniz?`
+                'Are you sure to delete post?': `Gönderiyi silmek istedğinizden emin misiniz?`,
+                'Delete My Account': 'Hesabımı Sil',
+                'Are you sure to delete your account?': 'Hesabınızı silmek istediğinizden emin misiniz?'
             }
         }
     },
