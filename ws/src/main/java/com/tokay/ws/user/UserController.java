@@ -55,7 +55,7 @@ public class UserController {
 		return new UserVM(user);
 	}
 	
-	@DeleteMapping("/gonderiler/{username}")
+	@DeleteMapping("/users/{username}")
 	@PreAuthorize("#username == principal.username")
 	GenericResponse deleteUser(@PathVariable String username) {
 		this.userService.deleteUser(username);
