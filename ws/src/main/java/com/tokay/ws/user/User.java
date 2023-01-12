@@ -1,12 +1,15 @@
 package com.tokay.ws.user;
 
 import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -17,6 +20,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tokay.ws.gonderi.Gonderi;
 
 import lombok.Data;
 
@@ -51,6 +55,9 @@ public class User implements UserDetails {
 
 	@Lob
 	private String image;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	private List<Gonderi> gonderiler;
 
 	@Override
 	@JsonIgnore

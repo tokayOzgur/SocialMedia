@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tokay.ws.configuration.AppConfiguration;
+import com.tokay.ws.user.User;
 
 @Service
 @EnableScheduling
@@ -76,7 +77,7 @@ public class FileService {
 	public String detectType(byte[] arr) {
 		return tika.detect(arr);
 	}
-	
+
 	public String detectType(String value) {
 		byte[] base64encoded = Base64.getDecoder().decode(value);
 		return tika.detect(base64encoded);
@@ -112,5 +113,13 @@ public class FileService {
 			repo.deleteById(file.getId());
 		}
 
+	}
+
+	public void deleteAllStoredFilesForUser(User user) {
+		deleteProfileImage(user.getImage());
+		List<FileAttachment> filesToBeRemoved = repo.findByGonderiUser(user);
+		for (FileAttachment file : filesToBeRemoved) {
+			deleteAttachmentFile(file.getName());
+		}
 	}
 }
