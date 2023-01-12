@@ -76,6 +76,6 @@ public class UserService {
 
 	public void deleteUser(String username) {
 		gonderiService.deleteGonderilerOfUser(username);
-		userRepository.delete(userRepository.findByUsername(username));
+		userRepository.deleteByUsername(username);
 	}
 }
