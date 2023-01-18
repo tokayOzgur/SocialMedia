@@ -67,7 +67,7 @@ const GonderiView = (props) => {
         <div className="pl-5">{content}</div>
         {fileAttachment && (
           <div className="pl-5 text-center">
-            {/* {fileAttachment.fileType.startsWith("image") && (
+            {fileAttachment.fileType.startsWith("image") && (
             <img
               className="img-fluid"
               src={"images/attachments/" + fileAttachment.name}
@@ -76,7 +76,7 @@ const GonderiView = (props) => {
           )}
           {!fileAttachment.fileType.startsWith("image") && (
             <strong>Post has unknown attachment</strong>
-          )} */}
+          )}
           </div>
         )}
       </div>

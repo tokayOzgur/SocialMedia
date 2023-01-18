@@ -26,11 +26,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
+		
+		http.exceptionHandling().authenticationEntryPoint(new AuthEntryPoint());
+		
 		http.headers().frameOptions().disable();
 
-		http.httpBasic().authenticationEntryPoint(new AuthEntryPoint());
-
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/1.0/auth").authenticated()
+		http.authorizeRequests()
 				.antMatchers(HttpMethod.PUT, "/api/1.0/users/{username}").authenticated()
 				.antMatchers(HttpMethod.POST, "/api/1.0/gonderiler").authenticated()
 				.antMatchers(HttpMethod.POST, "/api/1.0/gonderi-attachments").authenticated()
