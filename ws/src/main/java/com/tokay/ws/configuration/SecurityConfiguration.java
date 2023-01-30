@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, "/api/1.0/users/{username}").authenticated()
 				.antMatchers(HttpMethod.POST, "/api/1.0/gonderiler").authenticated()
 				.antMatchers(HttpMethod.POST, "/api/1.0/gonderi-attachments").authenticated()
+				.antMatchers(HttpMethod.POST, "/api/1.0/auth").authenticated()
 				.and().authorizeRequests().anyRequest().permitAll();
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
