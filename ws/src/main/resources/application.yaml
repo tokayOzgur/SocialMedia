@@ -38,5 +38,10 @@ tokay:
 ---
 spring:
   profiles: dev
+  datasource:
+    url: jdbc:h2:./devdb
+  jpa:
+    hibernate:
+      ddl-auto: update
 tokay:
   upload-path: storage-dev
