@@ -57,7 +57,7 @@ public class User implements UserDetails {
 	@Lob
 	private String image;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
 	private List<Token> tokens;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
