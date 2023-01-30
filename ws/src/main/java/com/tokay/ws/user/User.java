@@ -20,6 +20,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tokay.ws.auth.Token;
 import com.tokay.ws.gonderi.Gonderi;
 
 import lombok.Data;
@@ -55,6 +56,9 @@ public class User implements UserDetails {
 
 	@Lob
 	private String image;
+
+	@OneToMany(mappedBy = "user")
+	private List<Token> tokens;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Gonderi> gonderiler;
